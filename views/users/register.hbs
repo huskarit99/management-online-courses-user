@@ -1,0 +1,69 @@
+<!-- Page breadcrumb -->
+<section id="mu-page-breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mu-page-breadcrumb-area">
+                    <h2>Đăng ký</h2>
+                    <ol class="breadcrumb">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li class="active">Đăng ký</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End breadcrumb -->
+<style>
+    .login-form {
+        width: 340px;
+        margin: 50px auto;
+        font-size: 15px;
+    }
+
+    .login-form form {
+        margin-bottom: 15px;
+        background: #f7f7f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+
+    .login-form h2 {
+        margin: 0 0 15px;
+    }
+
+    .form-control,
+    .btn {
+        min-height: 38px;
+        border-radius: 2px;
+    }
+
+    .btn {
+        font-size: 15px;
+        font-weight: bold;
+    }
+</style>
+<section id="mu-error">
+    <div class="login-form">
+        <form action="/examples/actions/confirmation.php" method="post">
+            <h2 class="text-center">Đăng ký</h2>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Họ và tên" required="required">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Email" required="required">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Tên tài khoản" required="required">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Mật khẩu" required="required">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block" style="background-color: #01bafd; border-color: #01bafd">Đăng ký</button>
+            </div>
+        </form>
+        <p class="text-center"><a href="#">Đăng ký tài khoản</a></p>
+    </div>
+</section>
