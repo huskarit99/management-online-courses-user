@@ -14,6 +14,10 @@ router.get('/course-detail', function(req, res, next) {
     res.render('courses/course-detail', { title: 'Express' });
 });
 
+router.get('/course-video', function(req, res, next) {
+    res.render('courses/course-video', { title: 'Express' });
+});
+
 
 router.get('/login', function(req, res, next) {
     res.render('users/login', { title: 'Express' });
