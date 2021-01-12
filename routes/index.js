@@ -8,9 +8,7 @@ router.get('/', homeController.index);
 
 router.get('/list-courses', courseController.list_courses);
 
-router.get('/course-detail', function(req, res, next) {
-    res.render('courses/course-detail', { title: 'Express' });
-});
+router.get('/course-detail/:id', courseController.course_detail);
 
 router.get('/course-video', function(req, res, next) {
     res.render('courses/course-video', { title: 'Express' });

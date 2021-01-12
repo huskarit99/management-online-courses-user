@@ -52,7 +52,7 @@
                 </button>
                 <!-- LOGO -->
                 <!-- TEXT BASED LOGO -->
-                <a class="navbar-brand" href="index.html"><i class="fa fa-university"></i><span>Varsity</span></a>
+                <a class="navbar-brand" href="/"><i class="fa fa-university"></i><span>Varsity</span></a>
                 <!-- IMG BASED LOGO  -->
                 <!-- <a class="navbar-brand" href="index.html"><img src="assets/img/logo.png" alt="logo"></a> -->
             </div>
@@ -64,7 +64,9 @@
                                 class="fa fa-angle-down"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             {{#each category}}
-                            <li><a href="list-courses">{{name}}</a></li>
+                            {{#each categories}}
+                            <li><a href="list-courses?category={{name}}">{{name}}</a></li>
+                            {{/each}}
                             {{/each}}
                         </ul>
                     </li>

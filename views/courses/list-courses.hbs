@@ -27,10 +27,10 @@
                                 <div class="row">
                                     {{#each list_courses}}
                                     <div class="col-md-6 col-sm-6">
-                                        
+
                                         <div class="mu-latest-course-single">
                                             <figure class="mu-latest-course-img">
-                                                <a href="#"><img src="{{image}}" alt="img"></a>
+                                                <a href="course-detail/{{_id}}"><img src="{{image}}" alt="img"></a>
                                                 <figcaption class="mu-latest-course-imgcaption">
                                                     <a href="#">{{categoryChildName}}</a>
                                                 </figcaption>
@@ -54,15 +54,18 @@
                                 <nav>
                                     <ul class="pagination">
                                         <li style="{{isDisplayedPrevious current_page 1}}">
-                                            <a href="list-courses?page={{predictPage current_page -1}}" aria-label="Previous">
+                                            <a href="list-courses?page={{predictPage current_page -1}}"
+                                                aria-label="Previous">
                                                 <span class="fa fa-angle-left"></span> Prev
                                             </a>
                                         </li>
-                                        {{#each  page_number}}
-                                        <li><a style="{{isCurrentPage ../current_page this}}" href="list-courses?page={{this}}">{{this}}</a></li>
+                                        {{#each page_number}}
+                                        <li><a style="{{isCurrentPage ../current_page this}}"
+                                                href="list-courses?page={{this}}">{{this}}</a></li>
                                         {{/each}}
                                         <li style="{{isDisplayedNext current_page page_number.length}}">
-                                            <a href="list-courses?page={{predictPage current_page 1}}" aria-label="Next">
+                                            <a href="list-courses?page={{predictPage current_page 1}}"
+                                                aria-label="Next">
                                                 Next <span class="fa fa-angle-right"></span>
                                             </a>
                                         </li>
@@ -78,18 +81,35 @@
                                 <div class="mu-single-sidebar">
                                     <h3>Danh mục</h3>
                                     <ul class="mu-sidebar-catg">
-                                        {{#each category}}
+                                        {{!-- {{#each category}}
                                         <li class="main-nav-list">
-                                            <a data-toggle="collapse" href="#category{{_id}}" aria-expanded="false"
+                                            <a class="collapsed" data-toggle="collapse" href="#category{{_id}}"
                                                 aria-controls="category">{{name}}</a>
                                             <ul class="collapse" id="category{{_id}}" data-toggle="collapse"
-                                                aria-expanded="false" aria-controls="category">
+                                                aria-controls="category">
                                                 {{#each categories}}
-                                                <li><a href="#">{{name}}</a></li>
+                                                <li>
+                                                    <a
+                                                        href="list-courses?page={{../../current_page}}&category={{name}}">
+                                                        {{name}}
+                                                    </a>
+                                                </li>
                                                 {{/each}}
                                             </ul>
                                         </li>
+                                        {{/each}} --}}
+
+                                        {{#each category}}
+                                        <li><a href="#">{{name}}</a></li>
+                                        {{#each categories}}
+                                        <li style="margin-left: 10px;">
+                                            <a href="list-courses?page={{../../current_page}}&category={{name}}">
+                                                {{name}}
+                                            </a>
+                                        </li>
                                         {{/each}}
+                                        {{/each}}
+
                                     </ul>
                                 </div>
                                 <!-- end single sidebar -->
