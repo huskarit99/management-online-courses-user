@@ -25,46 +25,27 @@
                             <!-- start course content container -->
                             <div class="mu-course-container">
                                 <div class="row">
+                                    {{#each list_courses}}
                                     <div class="col-md-6 col-sm-6">
+                                        
                                         <div class="mu-latest-course-single">
                                             <figure class="mu-latest-course-img">
-                                                <a href="#"><img src="assets/img/courses/1.jpg" alt="img"></a>
+                                                <a href="#"><img src="{{image}}" alt="img"></a>
                                                 <figcaption class="mu-latest-course-imgcaption">
-                                                    <a href="#">Lập trình web</a>
-                                                    <span><i class="fa fa-clock-o"></i>90Days</span>
+                                                    <a href="#">{{categoryChildName}}</a>
                                                 </figcaption>
                                             </figure>
                                             <div class="mu-latest-course-single-content">
-                                                <h4><a href="#">Reacte</a></h4>
-                                                <p>Giảng viên: Lâm Quang vũ</p>
-                                                <p>Lập trình reate cơ bản</p>
+                                                <h4><a href="#">{{name}}</a></h4>
+                                                <p>Giảng viên: {{nameOwner}}</p>
+                                                <p>{{description}}</p>
                                                 <div class="mu-latest-course-single-contbottom">
-                                                    <a class="mu-course-details" href="#">Details</a>
-                                                    <span class="mu-course-price" href="#">$165.00</span>
+                                                    <span class="mu-course-price" href="#">{{price}}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="mu-latest-course-single">
-                                            <figure class="mu-latest-course-img">
-                                                <a href="#"><img src="assets/img/courses/1.jpg" alt="img"></a>
-                                                <figcaption class="mu-latest-course-imgcaption">
-                                                    <a href="#">Lập trình web</a>
-                                                    <span><i class="fa fa-clock-o"></i>90Days</span>
-                                                </figcaption>
-                                            </figure>
-                                            <div class="mu-latest-course-single-content">
-                                                <h4><a href="#">Reacte</a></h4>
-                                                <p>Giảng viên: Lâm Quang vũ</p>
-                                                <p>Lập trình reate cơ bản</p>
-                                                <div class="mu-latest-course-single-contbottom">
-                                                    <a class="mu-course-details" href="#">Details</a>
-                                                    <span class="mu-course-price" href="#">$165.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {{/each}}
                                 </div>
                             </div>
                             <!-- end course content container -->
@@ -72,18 +53,16 @@
                             <div class="mu-pagination">
                                 <nav>
                                     <ul class="pagination">
-                                        <li>
-                                            <a href="#" aria-label="Previous">
+                                        <li style="{{isDisplayedPrevious current_page 1}}">
+                                            <a href="list-courses?page={{predictPage current_page -1}}" aria-label="Previous">
                                                 <span class="fa fa-angle-left"></span> Prev
                                             </a>
                                         </li>
-                                        <li class="active"><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li>
-                                            <a href="#" aria-label="Next">
+                                        {{#each  page_number}}
+                                        <li><a style="{{isCurrentPage ../current_page this}}" href="list-courses?page={{this}}">{{this}}</a></li>
+                                        {{/each}}
+                                        <li style="{{isDisplayedNext current_page page_number.length}}">
+                                            <a href="list-courses?page={{predictPage current_page 1}}" aria-label="Next">
                                                 Next <span class="fa fa-angle-right"></span>
                                             </a>
                                         </li>
@@ -99,27 +78,22 @@
                                 <div class="mu-single-sidebar">
                                     <h3>Danh mục</h3>
                                     <ul class="mu-sidebar-catg">
+                                        {{#each category}}
                                         <li class="main-nav-list">
-                                            <a data-toggle="collapse" href="#category" aria-expanded="false"
-                                                aria-controls="category">Web Design</a>
-                                            <ul class="collapse" id="category" data-toggle="collapse"
+                                            <a data-toggle="collapse" href="#category{{_id}}" aria-expanded="false"
+                                                aria-controls="category">{{name}}</a>
+                                            <ul class="collapse" id="category{{_id}}" data-toggle="collapse"
                                                 aria-expanded="false" aria-controls="category">
-                                                <li ><a href="#">Frozen Fish</a></li>
-                                                <li ><a href="#">Dried Fish</a></li>
-                                                <li ><a href="#">Fresh Fish</a></li>
-                                                <li ><a href="#">Meat Alternatives</a></li>
-                                                <li ><a href="#">Meat</a></li>
+                                                {{#each categories}}
+                                                <li><a href="#">{{name}}</a></li>
+                                                {{/each}}
                                             </ul>
                                         </li>
-                                        <li><a href="">Web Development</a></li>
-                                        <li><a href="">Math</a></li>
-                                        <li><a href="">Physics</a></li>
-                                        <li><a href="">Camestry</a></li>
-                                        <li><a href="">English</a></li>
+                                        {{/each}}
                                     </ul>
                                 </div>
                                 <!-- end single sidebar -->
-                                
+
                             </aside>
                             <!-- / end sidebar -->
                         </div>

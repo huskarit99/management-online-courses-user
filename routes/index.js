@@ -1,13 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var homeController = require('../controllers/homeController');
+var courseController = require('../controllers/courseController');
 
 /* GET home page. */
 router.get('/', homeController.index);
 
-router.get('/list-courses', function(req, res, next) {
-    res.render('courses/list-courses', { title: 'Express' });
-});
+router.get('/list-courses', courseController.list_courses);
 
 router.get('/course-detail', function(req, res, next) {
     res.render('courses/course-detail', { title: 'Express' });

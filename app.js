@@ -24,7 +24,24 @@ db.once('open', function(callback) {
 app.engine('hbs', hbs({
     extname: 'hbs',
     defaultLayout: 'layout',
-    layoutDir: __dirname + '/views/layouts/'
+    layoutDir: __dirname + '/views/layouts/',
+    helpers: {
+        predictPage: (currentPage, step) => {
+            return currentPage + step;
+        },
+        isDisplayedNext: (currentPage, maxPage) => {
+            if (currentPage === maxPage)
+                return "display: none";
+        },
+        isDisplayedPrevious: (currentPage, minPage) => {
+            if (currentPage === minPage)
+                return "display: none";
+        },
+        isCurrentPage: (currentPage, page) => {
+            if (currentPage === page)
+                return "background-color: #01bafd; color: #fff";
+        }
+    }
 }))
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
