@@ -63,8 +63,9 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Khoá học <span
                                 class="fa fa-angle-down"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="list-courses">Course Archive</a></li>
-                            <li><a href="course-detail">Course Detail</a></li>
+                            {{#each category}}
+                            <li><a href="list-courses">{{name}}</a></li>
+                            {{/each}}
                         </ul>
                     </li>
                     <li><a href="/login">Đăng nhập</a></li>
