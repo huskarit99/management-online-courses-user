@@ -131,3 +131,36 @@ exports.edit_profile = (req, res, next) => {
         }
     });
 }
+exports.password = (req, res, next) => {
+    res.render('users/password');
+}
+
+exports.change_password = (req, res, next) => {
+    let oldpassword = req.body.oldpassword;
+    let newpassword = req.body.newpassword;
+    let confirmpassword = req.body.confirmpassword;
+    User.findOne({ username: req.session.userSession.username }, function(err, user) {
+        if (err) { return done(err); }
+        if (user !== null) {
+            var hash = user.password;
+            if (bcrypt.compareSync(oldpassword, hash)) {
+                if (oldpassword != newpassword) {
+                    if (newpassword == confirmpassword) {
+                        user.password = bcrypt.hashSync(newpassword, bcrypt.genSaltSync(10));
+                        user.save(function(err, result) {});
+                        res.redirect('/profile');
+                    } else {
+                        res.render("users/password", { message: 'Wrond new password' });
+                    }
+                } else {
+                    res.render("users/password", { message: 'Password not change' });
+                }
+
+            } else {
+                res.render("users/password", { message: 'Wrond old password' });
+            }
+        } else {
+            res.render("users/password", { message: 'User can not found' });
+        }
+    });
+}

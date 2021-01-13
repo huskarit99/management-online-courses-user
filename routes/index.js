@@ -30,4 +30,8 @@ router.get('/profile', userController.profile);
 
 router.post('/profile', userController.edit_profile);
 
+router.get('/password', userController.password);
+
+router.post('/password', userController.change_password);
+
 module.exports = router;
