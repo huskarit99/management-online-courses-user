@@ -4,10 +4,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="mu-page-breadcrumb-area">
-                    <h2>Đăng nhập</h2>
+                    <h2>Thông tin cá nhân</h2>
                     <ol class="breadcrumb">
                         <li><a href="/">Trang chủ</a></li>
-                        <li class="active">Đăng nhập</li>
+                        <li class="active">Thông tin cá nhân</li>
                     </ol>
                 </div>
             </div>
@@ -46,18 +46,24 @@
 </style>
 <section id="mu-error">
     <div class="login-form">
-        <form action="/login" method="post">
-            <h2 class="text-center">Đăng nhập</h2>
+        <form action="/profile" method="post">
+            <h2 class="text-center">Thông tin cá nhân</h2>
             <div class="form-group">
-                <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+                <input type="text" class="form-control" name="name" placeholder="Họ và tên"
+                    value="{{session.userSession.name}}" required=" required">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+                <input type="text" class="form-control" name="email" value="{{session.userSession.email}}"
+                    placeholder="Email" required="required">
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block" style="background-color: #01bafd; border-color: #01bafd">Đăng nhập</button>
+                <button type="submit" class="btn btn-primary btn-block"
+                    style="background-color: #01bafd; border-color: #01bafd">Chỉnh sửa</button>
+            </div>
+            <p style="color: red;">{{message}}</p>
+            <div class="clearfix">
+                <a href="#" class="float-right">Đổi mật khẩu</a>
             </div>
         </form>
-        <p class="text-center"><a href="register">Đăng ký tài khoản</a></p>
     </div>
 </section>

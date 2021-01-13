@@ -82,3 +82,52 @@ exports.post_register = (req, res, next) => {
             }
         });
 }
+exports.profile = (req, res, next) => {
+    res.render('users/profile');
+}
+
+exports.edit_profile = (req, res, next) => {
+    let email = req.body.email;
+    let name = req.body.name;
+    let username = req.session.userSession.username;
+    User.findOne({ username: username }, function(err, user) {
+        if (user !== null) {
+            if (user.name !== name) {
+                user.name = name;
+                if (user.email !== email) {
+                    User.findOne({ email: email }, function(err, user_email) {
+                        if (user_email !== null) {
+                            res.render("users/profile", { message: 'Email already exist' });
+                        } else {
+                            user.email = email;
+                            req.session.userSession = user;
+                            user.save(function(err, result) {});
+                            res.redirect('/profile');
+                        }
+                    });
+                } else {
+                    req.session.userSession = user;
+                    user.save(function(err, result) {});
+                    res.redirect('/profile');
+                }
+            } else {
+                if (user.email !== email) {
+                    User.findOne({ email: email }, function(err, user_email) {
+                        if (user_email !== null) {
+                            res.render("users/profile", { message: 'Email already exist' });
+                        } else {
+                            user.email = email;
+                            req.session.userSession = user;
+                            user.save(function(err, result) {});
+                            res.redirect('/profile');
+                        }
+                    });
+                } else {
+                    res.redirect('/profile');
+                }
+            }
+        } else {
+            res.render("users/profile", { message: 'User can not found' });
+        }
+    });
+}
