@@ -22,7 +22,8 @@ router.post('/login', userController.user_login);
 
 router.get('/logout', userController.logout);
 
-router.get('/register', function(req, res, next) {
-    res.render('users/register', { title: 'Express' });
-});
+router.get('/register', userController.register);
+
+router.post('/register', userController.post_register);
+
 module.exports = router;

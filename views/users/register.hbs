@@ -46,20 +46,21 @@
 </style>
 <section id="mu-error">
     <div class="login-form">
-        <form action="/examples/actions/confirmation.php" method="post">
+        <form action="/register" method="post">
             <h2 class="text-center">Đăng ký</h2>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Họ và tên" required="required">
+                <input type="text" class="form-control" name="name" placeholder="Họ và tên" required="required">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Email" required="required">
+                <input type="text" class="form-control" name="email" placeholder="Email" required="required">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Tên tài khoản" required="required">
+                <input type="text" class="form-control" name="username"placeholder="Tên tài khoản" required="required">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Mật khẩu" required="required">
+                <input type="password" class="form-control" name="password" minlength="8" placeholder="Mật khẩu" required="required">
             </div>
+            <p style="color: red;">{{message}}</p>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block" style="background-color: #01bafd; border-color: #01bafd">Đăng ký</button>
             </div>
