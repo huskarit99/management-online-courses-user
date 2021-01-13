@@ -5,7 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('express-handlebars');
 var mongoose = require('mongoose');
-
+var flash = require('connect-flash');
+var passport = require('passport');
+var session = require('express-session');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 require('dotenv').config();
@@ -40,6 +42,12 @@ app.engine('hbs', hbs({
         isCurrentPage: (currentPage, page) => {
             if (currentPage === page)
                 return "background-color: #01bafd; color: #fff";
+        },
+        eq: function() {
+            const args = Array.prototype.slice.call(arguments, 0, -1);
+            return args.every(function(expression) {
+                return args[0] === expression;
+            });
         }
     }
 }))
@@ -51,6 +59,33 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// passport initialize
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+passport.deserializeUser(function(user, done) {
+    done(null, user);
+});
+
+// flash
+app.use(flash());
+
+// session
+app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    secret: 'somesecret',
+    cookie: { maxAge: 1000 * 60 * 60 * 2 }
+}));
+
+app.use(function(req, res, next) {
+    res.locals.session = req.session;
+    next();
+});
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

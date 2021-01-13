@@ -70,7 +70,18 @@
                             {{/each}}
                         </ul>
                     </li>
-                    <li><a href="/login">Đăng nhập</a></li>
+                    {{#if session.userSession}}
+                    {{#if (eq session.userSession.role 1)}}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tài khoản <span
+                                class="fa fa-angle-down"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="blog-archive.html">Thông tin cá nhân</a></li>
+                            <li><a href="blog-single.html">Quản lý khoá học</a></li>
+                            <li><a href='/logout'>Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                    {{else}}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tài khoản <span
                                 class="fa fa-angle-down"></span></a>
@@ -78,18 +89,15 @@
                             <li><a href="blog-archive.html">Thông tin cá nhân</a></li>
                             <li><a href="blog-single.html">Danh sách yêu thích</a></li>
                             <li><a>Danh sách khoá học</a></li>
-                            <li><a>Đăng xuất</a></li>
+                            <li><a href='/logout'>Đăng xuất</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tài khoản <span
-                                class="fa fa-angle-down"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="blog-archive.html">Thông tin cá nhân</a></li>
-                            <li><a href="blog-single.html">Quản lý khoá học</a></li>
-                            <li><a>Đăng xuât</a></li>
-                        </ul>
-                    </li>
+                    {{/if}}
+                    {{else}}
+                    <li><a href="/login">Đăng nhập</a></li> 
+                    {{/if}}
+                    
+                    
                     <li><a href="contact.html">Contact</a></li>
                     <li><a href="404.html">404 Page</a></li>
                     <li><a href="#" id="mu-search-icon"><i class="fa fa-search"></i></a></li>
