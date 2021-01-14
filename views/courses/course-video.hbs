@@ -29,62 +29,56 @@
                                     <div class="col-md-12">
                                         <div class="mu-latest-course-single">
                                             <figure class="mu-latest-course-img">
-                                                <a href="#"><img src="assets/img/courses/1.jpg" alt="img"></a>
-                                                <figcaption class="mu-latest-course-imgcaption">
-                                                    <a href="#">Drawing</a>
-                                                    <span><i class="fa fa-clock-o"></i>90Days</span>
-                                                </figcaption>
+                                                <video id="my-video"
+                                                    class="video-js vjs-default-skin vjs-big-play-centered" controls
+                                                    preload="auto" poster="MY_VIDEO_POSTER.jpg"
+                                                    data-setup='{"fluid": true}'>
+                                                    {{#if (eq video.isPreviewed true)}}
+                                                    <source src="{{video.url}}" type="video/mp4" />
+                                                    {{else}}
+                                                    {{/if}}
+                                                    <source src="MY_VIDEO.webm" type="video/webm" />
+                                                    <p class="vjs-no-js">
+                                                        To view this video please enable JavaScript, and consider
+                                                        upgrading to a
+                                                        web browser that
+                                                        <a href="https://videojs.com/html5-video-support/"
+                                                            target="_blank">supports HTML5 video</a>
+                                                    </p>
+                                                </video>
+                                                
                                             </figure>
                                             <div class="mu-latest-course-single-content">
-                                                <h2><a href="#">Bài 1: Các lệnh cơ bản</a></h2>
+                                                <h2>Bài {{num}}: {{video.title}}</h2>
                                                 <h4>Danh sách bài học</h4>
                                                 <div class="table-responsive">
                                                     <table class="table">
                                                         <thead>
                                                             <tr>
                                                                 <th> Title </th>
-                                                                <th> Course Time </th>
-                                                                <th> Spent Time </th>
-                                                                <th> Status </th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td> 1. Topic 1 </td>
-                                                                <td> 15:30 </td>
-                                                                <td> 13:80 </td>
-                                                                <td> Successful </td>
+                                                            {{#if (eq session.userSession course._id)}}
+                                                            {{#each course.videos}}
+                                                            <tr onclick="window.location='/course-video?idcourse='+'{{../course._id}}'+'&idvideo='+'{{_id}}'">
+                                                                <td> {{lookup ../num_order @index}}. {{title}} </td>
                                                             </tr>
-                                                            <tr>
-                                                                <td> 2. Topic 2 </td>
-                                                                <td> 15:30 </td>
-                                                                <td> 13:80 </td>
-                                                                <td> Successful </td>
+                                                            {{/each}}
+                                                            {{else}}
+                                                            {{#each course.videos}}
+                                                            {{#if (eq isPreviewed true)}}
+                                                            <tr
+                                                                onclick="window.location.href='/course-video?idcourse='+'{{../course._id}}'+'&idvideo='+'{{_id}}'">
+                                                                <td> {{lookup ../num_order @index}}. {{title}} </td>
                                                             </tr>
+                                                            {{else}}
                                                             <tr>
-                                                                <td> 3. Topic 3 </td>
-                                                                <td> 15:30 </td>
-                                                                <td> - </td>
-                                                                <td> Successful </td>
+                                                                <td> {{lookup ../num_order @index}}. {{title}} </td>
                                                             </tr>
-                                                            <tr>
-                                                                <td> 4. Topic 4 </td>
-                                                                <td> 15:30 </td>
-                                                                <td> 13:80 </td>
-                                                                <td> Successful </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td> 5. Topic 5 </td>
-                                                                <td> 15:30 </td>
-                                                                <td> - </td>
-                                                                <td> Waiting </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td> 6. Topic 6 </td>
-                                                                <td> 15:30 </td>
-                                                                <td> 13:80 </td>
-                                                                <td> - </td>
-                                                            </tr>
+                                                            {{/if}}
+                                                            {{/each}}
+                                                            {{/if}}
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -94,142 +88,7 @@
                                 </div>
                             </div>
                             <!-- end course content container -->
-                           
-                            <!-- start blog comment -->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mu-comments-area">
-                                        <h3>5 Comments</h3>
-                                        <div class="comments">
-                                            <ul class="commentlist">
-                                                <li>
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <img alt="img" src="assets/img/testimonial-1.png"
-                                                                class="media-object news-img">
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h4 class="author-name">David Muller</h4>
-                                                            <span class="comments-date"> Posted on 12th June,
-                                                                2016</span>
-                                                            <p>Lorem Ipsum is that it has a more-or-less normal
-                                                                distribution of letters, as opposed to using 'Content
-                                                                here, content here', making it look like readable
-                                                                English</p>
-                                                            <a class="reply-btn" href="#">Reply <span
-                                                                    class="fa fa-long-arrow-right"></span></a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <img alt="img" src="assets/img/testimonial-2.png"
-                                                                class="media-object news-img">
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h4 class="author-name">John Doe</h4>
-                                                            <span class="comments-date"> Posted on 12th June,
-                                                                2016</span>
-                                                            <p>Lorem Ipsum is that it has a more-or-less normal
-                                                                distribution of letters, as opposed to using 'Content
-                                                                here, content here', making it look like readable
-                                                                English</p>
-                                                            <a class="reply-btn" href="#">Reply <span
-                                                                    class="fa fa-long-arrow-right"></span></a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <ul class="children">
-                                                    <li class="author-comments">
-                                                        <div class="media">
-                                                            <div class="media-left">
-                                                                <img alt="img" src="assets/img/testimonial-3.png"
-                                                                    class="media-object news-img">
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <h4 class="author-name">Admin</h4>
-                                                                <span class="comments-date"> Posted on 12th June,
-                                                                    2016</span>
-                                                                <span class="author-tag">Author</span>
-                                                                <p>Lorem Ipsum is that it has a more-or-less normal
-                                                                    distribution of letters, as opposed to using
-                                                                    'Content here, content here', making it look like
-                                                                    readable English</p>
-                                                                <a class="reply-btn" href="#">Reply <span
-                                                                        class="fa fa-long-arrow-right"></span></a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <ul class="children">
-                                                        <li>
-                                                            <div class="media">
-                                                                <div class="media-left">
-                                                                    <img alt="img" src="assets/img/testimonial-1.png"
-                                                                        class="media-object news-img">
-                                                                </div>
-                                                                <div class="media-body">
-                                                                    <h4 class="author-name">David Muller</h4>
-                                                                    <span class="comments-date"> Posted on 12th June,
-                                                                        2016</span>
-                                                                    <p>Lorem Ipsum is that it has a more-or-less normal
-                                                                        distribution of letters, as opposed to using
-                                                                        'Content here, content here', making it look
-                                                                        like readable English</p>
-                                                                    <a class="reply-btn" href="#">Reply <span
-                                                                            class="fa fa-long-arrow-right"></span></a>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </ul>
-                                                <li>
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <img alt="img" src="assets/img/testimonial-2.png"
-                                                                class="media-object news-img">
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h4 class="author-name">Jhon Doe</h4>
-                                                            <span class="comments-date"> Posted on 12th June,
-                                                                2016</span>
-                                                            <p>Lorem Ipsum is that it has a more-or-less normal
-                                                                distribution of letters, as opposed to using 'Content
-                                                                here, content here', making it look like readable
-                                                                English</p>
-                                                            <a class="reply-btn" href="#">Reply <span
-                                                                    class="fa fa-long-arrow-right"></span></a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <!-- comments pagination -->
-                                            <nav>
-                                                <ul class="pagination comments-pagination">
-                                                    <li>
-                                                        <a aria-label="Previous" href="#">
-                                                            <span class="fa fa-long-arrow-left"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li><a href="#">1</a></li>
-                                                    <li><a href="#">2</a></li>
-                                                    <li><a href="#">3</a></li>
-                                                    <li><a href="#">4</a></li>
-                                                    <li><a href="#">5</a></li>
-                                                    <li>
-                                                        <a aria-label="Next" href="#">
-                                                            <span class="fa fa-long-arrow-right"></span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </nav>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end blog comment -->
                         </div>
-                        
                     </div>
                 </div>
             </div>

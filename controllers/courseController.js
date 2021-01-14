@@ -153,3 +153,27 @@ exports.course_detail = (req, res, next) => {
     });
 
 }
+exports.course_video = (req, res, next) => {
+    let id_course = req.query.idcourse;
+    let id_video = req.query.idvideo;
+    Course.findById(id_course).lean().exec(function(err, course) {
+        if (err) { return next(err) };
+        let video;
+        let num;
+        let num_order = [];
+        for (var i = 0; i < course.videos.length; i++) {
+            num_order.push(i + 1);
+            if (course.videos[i]._id == id_video) {
+                video = course.videos[i];
+                num = i + 1;
+            }
+        }
+        console.log(video);
+        res.render('courses/course-video', {
+            video: video,
+            num: num,
+            num_order: num_order,
+            course: course
+        });
+    })
+}

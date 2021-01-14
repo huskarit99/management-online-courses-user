@@ -53,7 +53,7 @@
                                                 <ul>
                                                     <li> <span>Họ và tên</span> <span>{{course.name_owner}}</span>
                                                     </li>
-                                                    <li> <span>Email</span> <span>{{course.email_owner}}</span></li>
+                                                    <li> <span>Email</span> <span>{{course.email}}</span></li>
                                                 </ul>
                                                 <h4>Đề cương môn học</h4>
                                                 <div class="table-responsive">
@@ -73,7 +73,8 @@
                                                             {{else}}
                                                             {{#each course.videos}}
                                                             {{#if (eq isPreviewed true)}}
-                                                            <tr onclick="window.location='/course-video'">
+                                                            <tr
+                                                                onclick="window.location.href='/course-video?idcourse='+'{{../course._id}}'+'&idvideo='+'{{_id}}'">
                                                                 <td> {{lookup ../num_order @index}}. {{title}} </td>
                                                             </tr>
                                                             {{else}}
@@ -107,7 +108,7 @@
                                                 <li>
                                                     <div class="media">
                                                         <div class="media-body">
-                                                            <h4 class="author-name">{{name_sub}}</h4>
+                                                            <h4 class="author-name">David Muller</h4>
                                                             <span class="comments-date">{{point}}</span>
                                                             <p>{{comment}}</p>
                                                         </div>

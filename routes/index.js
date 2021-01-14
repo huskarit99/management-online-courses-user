@@ -11,9 +11,7 @@ router.get('/list-courses', courseController.list_courses);
 
 router.get('/course-detail/:id', courseController.course_detail);
 
-router.get('/course-video', function(req, res, next) {
-    res.render('courses/course-video', { title: 'Express' });
-});
+router.get('/course-video', courseController.course_video);
 
 /* user */
 router.get('/login', userController.login);
