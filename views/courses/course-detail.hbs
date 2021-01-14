@@ -35,88 +35,55 @@
                                             </figure>
                                             <div class="mu-latest-course-single-content">
                                                 <h2><a href="#">{{course.name}}</a></h2>
-                                                <h4>Thông tin cá nhân</h4>
+                                                <h4>Thông tin khoá học</h4>
                                                 <ul>
-                                                    <li> <span>Giá</span> <span>{{course.price}}</span></li>
-                                                    <li> <span>Place</span> <span>California,USA</span></li>
-                                                    <li> <span>Total Students</span> <span>800+</span></li>
-                                                    <li> <span>Course Duration</span> <span>4 Weeks</span></li>
-                                                    <li> <span>Course Start</span> <span>July 25, 2016</span></li>
+                                                    <li> <span>Mô tả ngắn gọn</span> <span>{{course.description}}</span>
+                                                    </li>
+                                                    <li> <span>Học phí</span> <span>{{course.price}}</span></li>
+                                                    <li> <span>Học viên đăng ký </span> <span>
+                                                            {{course.subscribers.length}}</span></li>
+                                                    <li> <span>Điểm đánh giá </span> <span>{{point}}</span></li>
+                                                    <li> <span>Học viên đánh giá</span> <span>{{num}}</span></li>
                                                 </ul>
-                                                <h4>Description</h4>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet quod
-                                                    nisi quisquam modi dolore, dicta obcaecati architecto quidem ullam
-                                                    quia.</p>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo est
-                                                    itaque vero porro quasi illo ex consequuntur ad animi commodi, ipsam
-                                                    provident voluptas vel adipisci. Minima repellendus vel est, sequi
-                                                    labore quo ipsa voluptatem officiis ex fuga nemo quas. Eligendi
-                                                    inventore ducimus omnis, maxime, alias accusantium similique minus!
-                                                    Labore facilis qui, sunt, ipsam consectetur minus sapiente saepe
-                                                    numquam magnam quidem.</p>
-                                                <blockquote>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                        Deleniti, placeat, ipsa. Modi sed quibusdam vel autem fugit,
-                                                        eaque, iste. Excepturi fugit dignissimos suscipit dolor
-                                                        perferendis debitis magni sed, quia ab.</p>
-                                                </blockquote>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis
-                                                    ea consequatur doloremque deleniti error ullam, accusamus vel est
-                                                    alias, sit. Similique voluptas aliquid, excepturi accusamus, sequi
-                                                    ducimus incidunt mollitia non.</p>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi saepe
-                                                    possimus doloribus quod quibusdam officia suscipit qui illum nemo
-                                                    itaque, porro ipsam tempore enim error eius quia, culpa.
-                                                    Reprehenderit consequuntur voluptatem dolorum magni natus inventore
-                                                    molestias veritatis eos aspernatur repudiandae.</p>
-                                                <h4>Course Outline</h4>
+
+                                                <h4>Mô tả chi tiết</h4>
+                                                <p>{{course.detail}}</p>
+
+                                                <h4>Thông tin giáo viên</h4>
+                                                <ul>
+                                                    <li> <span>Họ và tên</span> <span>{{course.name_owner}}</span>
+                                                    </li>
+                                                    <li> <span>Email</span> <span>{{course.email_owner}}</span></li>
+                                                </ul>
+                                                <h4>Đề cương môn học</h4>
                                                 <div class="table-responsive">
                                                     <table class="table">
                                                         <thead>
                                                             <tr>
-                                                                <th> Title </th>
-                                                                <th> Course Time </th>
-                                                                <th> Spent Time </th>
-                                                                <th> Status </th>
+                                                                <th> Tiêu đề </th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr onclick="window.location='course-video'">
-                                                                <td> 1. Topic 1 </td>
-                                                                <td> 15:30 </td>
-                                                                <td> 13:80 </td>
-                                                                <td> Successful </td>
+                                                            {{#if (eq req.session.userSession course._id)}}
+                                                            {{#each course.videos}}
+                                                            <tr onclick="window.location='/course-video'">
+                                                                <td> {{lookup ../num_order @index}}. {{title}} </td>
                                                             </tr>
+                                                            {{/each}}
+                                                            {{else}}
+                                                            {{#each course.videos}}
+                                                            {{#if (eq isPreviewed true)}}
+                                                            <tr onclick="window.location='/course-video'">
+                                                                <td> {{lookup ../num_order @index}}. {{title}} </td>
+                                                            </tr>
+                                                            {{else}}
                                                             <tr>
-                                                                <td> 2. Topic 2 </td>
-                                                                <td> 15:30 </td>
-                                                                <td> 13:80 </td>
-                                                                <td> Successful </td>
+                                                                <td> {{lookup ../num_order @index}}. {{title}} </td>
                                                             </tr>
-                                                            <tr>
-                                                                <td> 3. Topic 3 </td>
-                                                                <td> 15:30 </td>
-                                                                <td> - </td>
-                                                                <td> Successful </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td> 4. Topic 4 </td>
-                                                                <td> 15:30 </td>
-                                                                <td> 13:80 </td>
-                                                                <td> Successful </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td> 5. Topic 5 </td>
-                                                                <td> 15:30 </td>
-                                                                <td> - </td>
-                                                                <td> Waiting </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td> 6. Topic 6 </td>
-                                                                <td> 15:30 </td>
-                                                                <td> 13:80 </td>
-                                                                <td> - </td>
-                                                            </tr>
+                                                            {{/if}}
+                                                            {{/each}}
+                                                            {{/if}}
+
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -126,135 +93,29 @@
                                 </div>
                             </div>
                             <!-- end course content container -->
-                           
+
                             <!-- start blog comment -->
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mu-comments-area">
-                                        <h3>5 Comments</h3>
+                                        <h3>{{num}} Comments</h3>
                                         <div class="comments">
                                             <ul class="commentlist">
+                                                {{#each course.subscribers}}
+                                                {{#if (eq comment "")}}
+                                                {{else}}
                                                 <li>
                                                     <div class="media">
-                                                        <div class="media-left">
-                                                            <img alt="img" src="assets/img/testimonial-1.png"
-                                                                class="media-object news-img">
-                                                        </div>
                                                         <div class="media-body">
-                                                            <h4 class="author-name">David Muller</h4>
-                                                            <span class="comments-date"> Posted on 12th June,
-                                                                2016</span>
-                                                            <p>Lorem Ipsum is that it has a more-or-less normal
-                                                                distribution of letters, as opposed to using 'Content
-                                                                here, content here', making it look like readable
-                                                                English</p>
-                                                            <a class="reply-btn" href="#">Reply <span
-                                                                    class="fa fa-long-arrow-right"></span></a>
+                                                            <h4 class="author-name">{{name_sub}}</h4>
+                                                            <span class="comments-date">{{point}}</span>
+                                                            <p>{{comment}}</p>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li>
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <img alt="img" src="assets/img/testimonial-2.png"
-                                                                class="media-object news-img">
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h4 class="author-name">John Doe</h4>
-                                                            <span class="comments-date"> Posted on 12th June,
-                                                                2016</span>
-                                                            <p>Lorem Ipsum is that it has a more-or-less normal
-                                                                distribution of letters, as opposed to using 'Content
-                                                                here, content here', making it look like readable
-                                                                English</p>
-                                                            <a class="reply-btn" href="#">Reply <span
-                                                                    class="fa fa-long-arrow-right"></span></a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <ul class="children">
-                                                    <li class="author-comments">
-                                                        <div class="media">
-                                                            <div class="media-left">
-                                                                <img alt="img" src="assets/img/testimonial-3.png"
-                                                                    class="media-object news-img">
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <h4 class="author-name">Admin</h4>
-                                                                <span class="comments-date"> Posted on 12th June,
-                                                                    2016</span>
-                                                                <span class="author-tag">Author</span>
-                                                                <p>Lorem Ipsum is that it has a more-or-less normal
-                                                                    distribution of letters, as opposed to using
-                                                                    'Content here, content here', making it look like
-                                                                    readable English</p>
-                                                                <a class="reply-btn" href="#">Reply <span
-                                                                        class="fa fa-long-arrow-right"></span></a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <ul class="children">
-                                                        <li>
-                                                            <div class="media">
-                                                                <div class="media-left">
-                                                                    <img alt="img" src="assets/img/testimonial-1.png"
-                                                                        class="media-object news-img">
-                                                                </div>
-                                                                <div class="media-body">
-                                                                    <h4 class="author-name">David Muller</h4>
-                                                                    <span class="comments-date"> Posted on 12th June,
-                                                                        2016</span>
-                                                                    <p>Lorem Ipsum is that it has a more-or-less normal
-                                                                        distribution of letters, as opposed to using
-                                                                        'Content here, content here', making it look
-                                                                        like readable English</p>
-                                                                    <a class="reply-btn" href="#">Reply <span
-                                                                            class="fa fa-long-arrow-right"></span></a>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </ul>
-                                                <li>
-                                                    <div class="media">
-                                                        <div class="media-left">
-                                                            <img alt="img" src="assets/img/testimonial-2.png"
-                                                                class="media-object news-img">
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h4 class="author-name">Jhon Doe</h4>
-                                                            <span class="comments-date"> Posted on 12th June,
-                                                                2016</span>
-                                                            <p>Lorem Ipsum is that it has a more-or-less normal
-                                                                distribution of letters, as opposed to using 'Content
-                                                                here, content here', making it look like readable
-                                                                English</p>
-                                                            <a class="reply-btn" href="#">Reply <span
-                                                                    class="fa fa-long-arrow-right"></span></a>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                {{/if}}
+                                                {{/each}}
                                             </ul>
-                                            <!-- comments pagination -->
-                                            <nav>
-                                                <ul class="pagination comments-pagination">
-                                                    <li>
-                                                        <a aria-label="Previous" href="#">
-                                                            <span class="fa fa-long-arrow-left"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li><a href="#">1</a></li>
-                                                    <li><a href="#">2</a></li>
-                                                    <li><a href="#">3</a></li>
-                                                    <li><a href="#">4</a></li>
-                                                    <li><a href="#">5</a></li>
-                                                    <li>
-                                                        <a aria-label="Next" href="#">
-                                                            <span class="fa fa-long-arrow-right"></span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </nav>
                                         </div>
                                     </div>
                                 </div>
@@ -267,25 +128,28 @@
                                 <!-- start single sidebar -->
                                 <div class="mu-single-sidebar" style="text-align: center;">
                                     <h4 style="color: #01bafd;">Học 365 ngày chỉ với</h4>
-                                    <h3 style="color: #ff7e00;">300.000</h3>
-                                    <button class="btn btn-primary" style="background-color: #ff7e00; border-color:#ff7e00">Đăng ký ngay</button>
+                                    <h3 style="color: #ff7e00;">{{course.price}}</h3>
+                                    <button class="btn btn-primary"
+                                        style="background-color: #ff7e00; border-color:#ff7e00">Đăng ký ngay</button>
                                 </div>
                                 <!-- end single sidebar -->
                                 <!-- start single sidebar -->
                                 <div class="mu-single-sidebar">
                                     <h3>Khoá học liên quan</h3>
                                     <div class="mu-sidebar-popular-courses">
+                                        {{#each course_popular}}
                                         <div class="media">
                                             <div class="media-left">
                                                 <a href="#">
-                                                    <img class="media-object" src="assets/img/courses/1.jpg" alt="img">
+                                                    <img class="media-object" src="{{image}}" alt="img">
                                                 </a>
                                             </div>
                                             <div class="media-body">
-                                                <h4 class="media-heading"><a href="#">Medical Science</a></h4>
-                                                <span class="popular-course-price">$200.00</span>
+                                                <h4 class="media-heading"><a href="#">{{name}}</a></h4>
+                                                <span class="popular-course-price">{{price}}</span>
                                             </div>
                                         </div>
+                                        {{/each}}
                                     </div>
                                 </div>
                                 <!-- end single sidebar -->

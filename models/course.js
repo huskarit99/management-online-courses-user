@@ -8,7 +8,7 @@ var CourseSchema = new Schema({
     detail: { type: String, require: true, max: 10000 },
     price: { type: Number, require: true },
     discount: { type: Number, require: true },
-    ownerId: { type: String, require: true, max: 50 },
+    ownerId: { type: Schema.Types.ObjectId, ref: 'User' },
     categoryRootId: { type: Schema.Types.ObjectId, ref: 'Category' },
     categoryChildCId: { type: String, require: true, max: 50 },
     views: { type: Number },

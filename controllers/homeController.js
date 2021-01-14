@@ -6,6 +6,7 @@ var User = require('../models/user');
 exports.index = (req, res, next) => {
     Course.find({ status: 1 }).lean().exec(async function(err, course) {
         for (var i = 0; i < course.length; i++) {
+            course[i].price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course[i].price);
             var data = course[i];
             await User.findOne({ _id: data.ownerId }, (err, user) => {
                 if (err) return next(err);
