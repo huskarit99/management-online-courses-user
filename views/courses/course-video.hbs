@@ -33,9 +33,13 @@
                                                     class="video-js vjs-default-skin vjs-big-play-centered" controls
                                                     preload="auto" poster="MY_VIDEO_POSTER.jpg"
                                                     data-setup='{"fluid": true}'>
+                                                    {{#if (eq check 1)}}
+                                                    <source src="{{video.url}}" type="video/mp4" />
+                                                    {{else}}
                                                     {{#if (eq video.isPreviewed true)}}
                                                     <source src="{{video.url}}" type="video/mp4" />
                                                     {{else}}
+                                                    {{/if}}
                                                     {{/if}}
                                                     <source src="MY_VIDEO.webm" type="video/webm" />
                                                     <p class="vjs-no-js">
@@ -46,7 +50,7 @@
                                                             target="_blank">supports HTML5 video</a>
                                                     </p>
                                                 </video>
-                                                
+
                                             </figure>
                                             <div class="mu-latest-course-single-content">
                                                 <h2>Bài {{num}}: {{video.title}}</h2>
@@ -59,9 +63,10 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {{#if (eq session.userSession course._id)}}
+                                                            {{#if (eq check 1)}}
                                                             {{#each course.videos}}
-                                                            <tr onclick="window.location='/course-video?idcourse='+'{{../course._id}}'+'&idvideo='+'{{_id}}'">
+                                                            <tr
+                                                                onclick="window.location='/course-video?idcourse='+'{{../course._id}}'+'&idvideo='+'{{_id}}'">
                                                                 <td> {{lookup ../num_order @index}}. {{title}} </td>
                                                             </tr>
                                                             {{/each}}

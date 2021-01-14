@@ -59,7 +59,6 @@ exports.index = (req, res, next) => {
         }
 
         Category.find({ status: 1 }).lean().exec(function(err, category) {
-            console.log(category)
             if (err) return next(err);
             for (var i = 0; i < category.length; i++) {
                 if (!category[i].categories) continue;
@@ -72,11 +71,11 @@ exports.index = (req, res, next) => {
                 }
                 category[i].categories = newChildCategories;
             }
+            req.session.category = category;
             res.render('users/index', {
                 courseHightlight: courseHightlight,
                 newCourse: newCourse,
                 viewCourse: viewCourse,
-                category: category
             });
         });
 

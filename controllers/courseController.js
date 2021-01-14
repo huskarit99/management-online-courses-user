@@ -4,7 +4,6 @@ var Category = require('../models/category');
 
 exports.list_courses = (req, res, next) => {
     const category = req.query.category || "none";
-    console.log(category);
     const page = Number(req.query.page) || Number(1);
     if (category == "none") {
         Course.find({ status: 1 }).lean().exec(async function(err, course) {
@@ -104,21 +103,32 @@ exports.course_detail = (req, res, next) => {
             course_detail['name_owner'] = user['name'];
             course_detail['email_owner'] = user['email'];
         });
+        for (var i = 0; i < course_detail.subscribers.length; i++) {
+            await User.findOne({ _id: course_detail.subscribers[i].userId }, (err, user) => {
+                if (err) return next(err);
+                course_detail.subscribers[i]['name_sub'] = user['name'];
+            });
+        }
         let num_order = [];
         let num = 0
         let point = 0.0;
+        let check = 0
         for (var i = 1; i <= course_detail.videos.length; i++) {
             num_order.push(i);
         }
         for (var i = 0; i < course_detail.subscribers.length; i++) {
             point = point + course_detail.subscribers[i].point;
+            if (req.session.userSession && check == 0) {
+
+                if (req.session.userSession._id == course_detail.subscribers[i].userId) {
+                    check = 1;
+                } else {
+                    check = 0;
+                }
+            }
             if (course_detail.subscribers[i].comment !== "") {
                 num++;
             }
-            await User.findOne({ _id: course_detail.subscribers[i].userId }, (err, user) => {
-                if (err) return next(err);
-                course_detail.subscribers[i]['name_sub'] = user['name'];
-            });
         }
         course_detail.price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course_detail.price);
         point = point / course_detail.subscribers.length;
@@ -133,10 +143,20 @@ exports.course_detail = (req, res, next) => {
                 }
             }
             let course_popular = [];
-            for (var i = 0; i <= 4; i++) {
-                course[i].price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course[i].price);
-                course_popular.push(course[i]);
+            if (course.length < 4) {
+                for (var i = 0; i < course.length; i++) {
+                    console.log(course[i].price);
+                    course[i].price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course[i].price);
+                    course_popular.push(course[i]);
+                }
+            } else {
+                for (var i = 0; i <= 4; i++) {
+                    console.log(course[i].price);
+                    course[i].price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course[i].price);
+                    course_popular.push(course[i]);
+                }
             }
+
             Course.findOne({ _id: id }, function(err, course_view) {
                 course_view.views = course_view.views + 1;
                 course_view.save(function(err, result) {});
@@ -145,7 +165,8 @@ exports.course_detail = (req, res, next) => {
                     point: point,
                     num_order: num_order,
                     course: course_detail,
-                    course_popular: course_popular
+                    course_popular: course_popular,
+                    check: check
                 });
             });
         })
@@ -161,6 +182,7 @@ exports.course_video = (req, res, next) => {
         let video;
         let num;
         let num_order = [];
+        let check = 0
         for (var i = 0; i < course.videos.length; i++) {
             num_order.push(i + 1);
             if (course.videos[i]._id == id_video) {
@@ -168,12 +190,22 @@ exports.course_video = (req, res, next) => {
                 num = i + 1;
             }
         }
+        for (var i = 0; i < course.subscribers.length; i++) {
+            if (req.session.userSession && check == 0) {
+                if (req.session.userSession._id == course.subscribers[i].userId) {
+                    check = 1;
+                } else {
+                    check = 0;
+                }
+            }
+        }
         console.log(video);
         res.render('courses/course-video', {
             video: video,
             num: num,
             num_order: num_order,
-            course: course
+            course: course,
+            check: check
         });
     })
 }

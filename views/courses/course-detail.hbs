@@ -53,7 +53,7 @@
                                                 <ul>
                                                     <li> <span>Họ và tên</span> <span>{{course.name_owner}}</span>
                                                     </li>
-                                                    <li> <span>Email</span> <span>{{course.email}}</span></li>
+                                                    <li> <span>Email</span> <span>{{course.email_owner}}</span></li>
                                                 </ul>
                                                 <h4>Đề cương môn học</h4>
                                                 <div class="table-responsive">
@@ -64,9 +64,10 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {{#if (eq req.session.userSession course._id)}}
+                                                            {{#if (eq check 1)}}
                                                             {{#each course.videos}}
-                                                            <tr onclick="window.location='/course-video'">
+                                                            <tr
+                                                                onclick="window.location.href='/course-video?idcourse='+'{{../course._id}}'+'&idvideo='+'{{_id}}'">
                                                                 <td> {{lookup ../num_order @index}}. {{title}} </td>
                                                             </tr>
                                                             {{/each}}
@@ -108,7 +109,7 @@
                                                 <li>
                                                     <div class="media">
                                                         <div class="media-body">
-                                                            <h4 class="author-name">David Muller</h4>
+                                                            <h4 class="author-name">{{name_sub}}</h4>
                                                             <span class="comments-date">{{point}}</span>
                                                             <p>{{comment}}</p>
                                                         </div>
@@ -127,12 +128,14 @@
                             <!-- start sidebar -->
                             <aside class="mu-sidebar">
                                 <!-- start single sidebar -->
+                                {{#if (eq check 0)}}
                                 <div class="mu-single-sidebar" style="text-align: center;">
                                     <h4 style="color: #01bafd;">Học 365 ngày chỉ với</h4>
                                     <h3 style="color: #ff7e00;">{{course.price}}</h3>
                                     <button class="btn btn-primary"
                                         style="background-color: #ff7e00; border-color:#ff7e00">Đăng ký ngay</button>
                                 </div>
+                                {{/if}}
                                 <!-- end single sidebar -->
                                 <!-- start single sidebar -->
                                 <div class="mu-single-sidebar">
