@@ -37,7 +37,7 @@ router.post('/password', userController.change_password);
 
 router.get('/enrolled-courses', userController.enrolled_courses);
 
-router.get('/add-wishlist/:id', userController.add_remove_wishlist);
+router.get('/add-remove-wishlist/:id', userController.add_remove_wishlist);
 
 router.get('/wishlist', userController.wishlist);
 
