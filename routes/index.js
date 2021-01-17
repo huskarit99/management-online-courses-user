@@ -3,6 +3,7 @@ var router = express.Router();
 var homeController = require('../controllers/homeController');
 var courseController = require('../controllers/courseController');
 var userController = require('../controllers/userController');
+const user = require('../models/user');
 
 /* GET home page. */
 router.get('/', homeController.index);
@@ -35,5 +36,7 @@ router.get('/password', userController.password);
 router.post('/password', userController.change_password);
 
 router.get('/enrolled-courses', userController.enrolled_courses);
+
+router.get('/add-wishlist/:id', userController.add_remove_wishlist);
 
 module.exports = router;

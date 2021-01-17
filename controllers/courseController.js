@@ -97,6 +97,7 @@ exports.list_courses = (req, res, next) => {
 }
 exports.course_detail = (req, res, next) => {
     let id = req.params.id;
+
     Course.findOne({ _id: id }).lean().exec(async function(err, course_detail) {
         let data = course_detail;
         await User.findOne({ _id: course_detail.ownerId }, (err, user) => {
@@ -149,17 +150,26 @@ exports.course_detail = (req, res, next) => {
             let course_popular = [];
             if (course.length < 4) {
                 for (var i = 0; i < course.length; i++) {
-                    console.log(course[i].price);
                     course[i].price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course[i].price);
                     course_popular.push(course[i]);
                 }
             } else {
                 for (var i = 0; i <= 4; i++) {
-                    console.log(course[i].price);
                     course[i].price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course[i].price);
                     course_popular.push(course[i]);
                 }
             }
+            let check_heart = -1
+            if (req.session.userSession) {
+                let itemIndex = req.session.userSession.wishlist.findIndex(p => p.courseId == id);
+                if (itemIndex > -1) {
+                    check_heart = 1;
+                } else {
+                    check_heart = 0;
+                }
+
+            }
+            console.log(check_heart);
 
             Course.findOne({ _id: id }, function(err, course_view) {
                 course_view.views = course_view.views + 1;
@@ -170,7 +180,8 @@ exports.course_detail = (req, res, next) => {
                     num_order: num_order,
                     course: course_detail,
                     course_popular: course_popular,
-                    check: check
+                    check: check,
+                    check_heart: check_heart
                 });
             });
         })

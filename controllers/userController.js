@@ -211,5 +211,31 @@ exports.enrolled_courses = (req, res, next) => {
     } else {
         res.redirect('/login');
     }
+}
+exports.add_remove_wishlist = (req, res, next) => {
+    if (req.session.userSession) {
+        let id = req.params.id;
+        Course.findOne({ _id: id }, function(err, course) {
+            if (err) return next(err);
+            User.findOne({ _id: req.session.userSession._id }, function(err, user) {
+                if (err) return next(err);
+                let itemIndex = user.wishlist.findIndex(p => p.courseId == id);
+                if (itemIndex > -1) {
+                    user.wishlist.splice(itemIndex, 1);
+                    req.session.userSession = user;
+                    user.save();
+                    res.redirect('back');
+                } else {
+                    var courseId = id;
+                    user.wishlist.push({ courseId });
+                    req.session.userSession = user;
+                    user.save();
+                    res.redirect('back');
+                }
+            })
+        })
+    } else {
+        res.redirect('/login');
+    }
 
 }
