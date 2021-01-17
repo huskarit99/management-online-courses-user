@@ -271,3 +271,19 @@ exports.wishlist = (req, res, next) => {
     }
 
 }
+exports.enroll = (req, res, next) => {
+    if (req.session.userSession) {
+        let id = req.params.id;
+        Course.findOne({ _id: id }, function(err, course) {
+            console.log(course);
+            let userId = req.session.userSession._id;
+            console.log(userId);
+            course.subscribers.push({ userId });
+            course.save();
+            res.redirect('back');
+        })
+    } else {
+        res.redirect('/login');
+    }
+
+}

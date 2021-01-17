@@ -41,4 +41,6 @@ router.get('/add-remove-wishlist/:id', userController.add_remove_wishlist);
 
 router.get('/wishlist', userController.wishlist);
 
+router.get('/enroll/:id', userController.enroll);
+
 module.exports = router;

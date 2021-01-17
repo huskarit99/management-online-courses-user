@@ -26,6 +26,7 @@
                             <div class="mu-course-container">
                                 <div class="row">
                                     {{#each list_courses}}
+                                    {{#if (eq isCompleted 1)}}
                                     <div class="col-md-3 col-sm-3">
                                         <div class="mu-latest-course-single">
                                             <figure class="mu-latest-course-img">
@@ -44,6 +45,29 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {{else}}
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="mu-latest-course-single">
+                                            <figure class="mu-latest-course-img">
+                                                <a href="course-detail/{{_id}}"><img src="{{image}}" alt="img"></a>
+                                                <figcaption class="mu-latest-course-imgcaption">
+                                                    {{categoryChildName}}
+                                                </figcaption>
+                                            </figure>
+                                            <div class="mu-latest-course-single-content">
+                                                <h4>{{name}}</h4>
+                                                <p>Giảng viên: {{nameOwner}}</p>
+                                                <p>{{description}}</p>
+                                                <div class="mu-latest-course-single-contbottom">
+                                                    <span>
+                                                            <i style="color: red;">Chưa hoàn thành</i>
+                                                        </span>
+                                                    <span class="mu-course-price" href="#">{{price}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/if}}
                                     {{/each}}
                                 </div>
                             </div>
