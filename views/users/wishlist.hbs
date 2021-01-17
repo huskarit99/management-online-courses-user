@@ -4,10 +4,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="mu-page-breadcrumb-area">
-                    <h2>Khoá học của tôi</h2>
+                    <h2>Khoá học yêu thích</h2>
                     <ol class="breadcrumb">
                         <li><a href="/">Trang chủ</a></li>
-                        <li class="active">Khoá học của tôi</li>
+                        <li class="active">Khoá học yêu thích</li>
                     </ol>
                 </div>
             </div>
@@ -25,11 +25,11 @@
                             <!-- start course content container -->
                             <div class="mu-course-container">
                                 <div class="row">
-                                    {{#each list_courses}}
+                                    {{#each user.wishlist}}
                                     <div class="col-md-3 col-sm-3">
                                         <div class="mu-latest-course-single">
                                             <figure class="mu-latest-course-img">
-                                                <a href="course-detail/{{_id}}"><img src="{{image}}" alt="img"></a>
+                                                <a href="course-detail/{{courseId}}"><img src="{{image}}" alt="img"></a>
                                                 <figcaption class="mu-latest-course-imgcaption">
                                                     {{categoryChildName}}
                                                 </figcaption>
@@ -49,28 +49,28 @@
                             </div>
                             <!-- end course content container -->
                             <!-- start course pagination -->
-                            <div class="mu-pagination">
+                            {{!-- <div class="mu-pagination">
                                 <nav>
                                     <ul class="pagination">
                                         <li style="{{isDisplayedPrevious current_page 1}}">
-                                            <a href="enrolled-courses?page={{predictPage current_page -1}}"
+                                            <a href="list-courses?page={{predictPage current_page -1}}"
                                                 aria-label="Previous">
                                                 <span class="fa fa-angle-left"></span> Prev
                                             </a>
                                         </li>
                                         {{#each page_number}}
                                         <li><a style="{{isCurrentPage ../current_page this}}"
-                                                href="enrolled-courses?page={{this}}">{{this}}</a></li>
+                                                href="list-courses?page={{this}}">{{this}}</a></li>
                                         {{/each}}
                                         <li style="{{isDisplayedNext current_page page_number.length}}">
-                                            <a href="enrolled-courses?page={{predictPage current_page 1}}"
+                                            <a href="list-courses?page={{predictPage current_page 1}}"
                                                 aria-label="Next">
                                                 Next <span class="fa fa-angle-right"></span>
                                             </a>
                                         </li>
                                     </ul>
                                 </nav>
-                            </div>
+                            </div> --}}
                             <!-- end course pagination -->
                         </div>
                     </div>
