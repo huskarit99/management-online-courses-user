@@ -3,6 +3,7 @@ var router = express.Router();
 var homeController = require('../controllers/homeController');
 var courseController = require('../controllers/courseController');
 var userController = require('../controllers/userController');
+var teacherController = require('../controllers/teacherController');
 const user = require('../models/user');
 
 /* GET home page. */
@@ -38,5 +39,12 @@ router.post('/password', userController.change_password);
 router.get('/enrolled-courses', userController.enrolled_courses);
 
 router.get('/add-wishlist/:id', userController.add_remove_wishlist);
+
+/* teacher */
+router.get('/manage-courses', teacherController.manage_courses);
+
+router.get('/lock-course', teacherController.lock_teacher);
+
+router.get('/unlock-course', teacherController.unlock_course);
 
 module.exports = router;

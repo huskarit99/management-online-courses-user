@@ -25,7 +25,7 @@
                                                     {{#each categories}}
                                                     <li style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
                                              border-radius: 5px;background-color: #fff;"><a style="color:#000;"
-                                                            href="/list-courses?filterByCategory={{_id}}">{{name}}</a>
+                                                            href="/manage-courses?filterByCategory={{_id}}">{{name}}</a>
                                                     </li>
                                                     {{/each}}
                                                 </ul>
@@ -37,7 +37,7 @@
                                                     {{#each users}}
                                                     <li style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
                                              border-radius: 5px;background-color: #fff;"><a style="color:#000;"
-                                                            href="/list-courses?filterByUser={{_id}}">{{name}}</a>
+                                                            href="/manage-courses?filterByUser={{_id}}">{{name}}</a>
                                                     </li>
                                                     {{/each}}
                                                 </ul>
@@ -94,17 +94,17 @@
         });
 
     </script>
-    <div class="courses-area">
+    <div clmanage"courses-area">
         <div class="container-fluid">
             <div class="row">
-                {{#each listCoursesInOnePage}}
+                {{#eachmanagetCoursesInOnePage}}
                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                    <div class="courses-inner res-mg-b-30">
-                        <div class="courses-title">
+                    <div clmanage"courses-inner res-mg-b-30">
+                        <div clmanage"courses-title">
                             <a href="detail-course"><img src="{{image}}" alt=""></a>
                             <h2>{{name}}</h2>
                         </div>
-                        <div class="courses-alaltic">
+                        <div clmanage"courses-alaltic">
                             <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-heart"></i></span> 50</span>
                             <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-dollar"></i></span>
                                 {{price}} VND</span>
@@ -195,17 +195,17 @@
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li style="{{isDisplayedPrevious currentPage 1}}" class="page-item"><a class="page-link"
-                                href="list-courses?{{predictPage currentPage -1 filterByCategory filterByUser}}">Previous</a>
+                                href="manage-courses?{{predictPage currentPage -1 filterByCategory filterByUser}}">Previous</a>
                         </li>
                         {{#each  page_number}}
                         <li class="page-item">
                             <a class="page-link" style="{{isCurrentPage ../currentPage this}}"
-                                href="list-courses?{{choosePage this ../filterByCategory ../filterByUser}}">{{this}}</a>
+                                href="manage-courses?{{choosePage this ../filterByCategory ../filterByUser}}">{{this}}</a>
                         </li>
                         {{/each}}
                         <li style="{{isDisplayedNext currentPage page_number.length}}" class="page-item"><a
                                 class="page-link"
-                                href="list-courses?{{predictPage currentPage 1 filterByCategory filterByUser}}">Next</a>
+                                href="manage-courses?{{predictPage currentPage 1 filterByCategory filterByUser}}">Next</a>
                         </li>
                     </ul>
                 </nav>
