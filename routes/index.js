@@ -13,6 +13,8 @@ router.get('/course-detail/:id', courseController.course_detail);
 
 router.get('/course-video', courseController.course_video);
 
+
+
 /* user */
 router.get('/login', userController.login);
 
@@ -31,5 +33,7 @@ router.post('/profile', userController.edit_profile);
 router.get('/password', userController.password);
 
 router.post('/password', userController.change_password);
+
+router.get('/enrolled-courses', userController.enrolled_courses);
 
 module.exports = router;

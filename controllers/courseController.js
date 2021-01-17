@@ -98,16 +98,20 @@ exports.list_courses = (req, res, next) => {
 exports.course_detail = (req, res, next) => {
     let id = req.params.id;
     Course.findOne({ _id: id }).lean().exec(async function(err, course_detail) {
+        let data = course_detail;
         await User.findOne({ _id: course_detail.ownerId }, (err, user) => {
             if (err) return next(err);
-            course_detail['name_owner'] = user['name'];
-            course_detail['email_owner'] = user['email'];
+            data['name_owner'] = user['name'];
+            data['email_owner'] = user['email'];
         });
+        course_detail = data;
         for (var i = 0; i < course_detail.subscribers.length; i++) {
+            let tmp = course_detail.subscribers[i];
             await User.findOne({ _id: course_detail.subscribers[i].userId }, (err, user) => {
                 if (err) return next(err);
-                course_detail.subscribers[i]['name_sub'] = user['name'];
+                tmp['name_sub'] = user['name'];
             });
+            course_detail.subscribers[i] = tmp;
         }
         let num_order = [];
         let num = 0

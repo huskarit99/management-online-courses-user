@@ -2,6 +2,7 @@ var User = require('../models/user');
 var bcrypt = require('bcrypt');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var Course = require('../models/course');
 
 exports.login = (req, res, next) => {
     res.render('users/login');
@@ -163,4 +164,52 @@ exports.change_password = (req, res, next) => {
             res.render("users/password", { message: 'User can not found' });
         }
     });
+}
+exports.enrolled_courses = (req, res, next) => {
+    if (req.session.userSession) {
+        const page = Number(req.query.page) || Number(1);
+        Course.find({ status: 1 }).lean().exec(async function(err, course) {
+            var list_courses = [],
+                page_number = [],
+                i = 0;
+            var list_tmp = [];
+            for (let _i = 0; _i < course.length; _i++) {
+                if (course[_i].status == 0) continue;
+
+                let itemIndex = course[_i].subscribers.findIndex(p => p.userId == req.session.userSession._id);
+                if (itemIndex > -1) {
+                    list_tmp.push(course[_i]);
+                }
+            }
+            console.log(list_tmp);
+            course = list_tmp;
+            for (let _i = 0; _i < course.length; _i++) {
+                if (course[_i].status == 0) continue;
+                if (Math.floor(i / 8) == page - 1) {
+                    course[i].price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course[i].price);
+                    const data = course[i];
+                    data['page'] = i + 1;
+                    await User.findOne({ _id: data.ownerId }, (err, user) => {
+                        if (err) return next(err);
+                        data['nameOwner'] = user['name'];
+                    });
+                    list_courses.push(data);
+                }
+                if (i / 8 == Math.floor(i / 8)) {
+                    page_number.push((i / 8) + 1);
+                }
+                i++;
+            }
+            res.render('users/enrolled-courses', {
+                list_courses: list_courses,
+                page_number: page_number,
+                current_page: page
+            });
+        });
+
+
+    } else {
+        res.redirect('/login');
+    }
+
 }

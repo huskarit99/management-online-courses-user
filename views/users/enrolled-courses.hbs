@@ -4,10 +4,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="mu-page-breadcrumb-area">
-                    <h2>Khoá học</h2>
+                    <h2>Khoá học của tôi</h2>
                     <ol class="breadcrumb">
                         <li><a href="/">Trang chủ</a></li>
-                        <li class="active">Khoá học</li>
+                        <li class="active">Khoá học của tôi</li>
                     </ol>
                 </div>
             </div>
@@ -21,13 +21,12 @@
             <div class="col-md-12">
                 <div class="mu-course-content-area">
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                             <!-- start course content container -->
                             <div class="mu-course-container">
                                 <div class="row">
                                     {{#each list_courses}}
-                                    <div class="col-md-6 col-sm-6">
-
+                                    <div class="col-md-3 col-sm-3">
                                         <div class="mu-latest-course-single">
                                             <figure class="mu-latest-course-img">
                                                 <a href="course-detail/{{_id}}"><img src="{{image}}" alt="img"></a>
@@ -73,58 +72,6 @@
                                 </nav>
                             </div>
                             <!-- end course pagination -->
-                        </div>
-                        <div class="col-md-3">
-                            <!-- start sidebar -->
-                            <aside class="mu-sidebar">
-                                <!-- start single sidebar -->
-                                <div class="mu-single-sidebar">
-                                    <h3>Danh mục</h3>
-                                    <ul class="mu-sidebar-catg">
-                                        {{!-- {{#each category}}
-                                        <li class="main-nav-list">
-                                            <a class="collapsed" data-toggle="collapse" href="#category{{_id}}"
-                                                aria-controls="category">{{name}}</a>
-                                            <ul class="collapse" id="category{{_id}}" data-toggle="collapse"
-                                                aria-controls="category">
-                                                {{#each categories}}
-                                                <li>
-                                                    <a
-                                                        href="list-courses?page={{../../current_page}}&category={{name}}">
-                                                        {{name}}
-                                                    </a>
-                                                </li>
-                                                {{/each}}
-                                            </ul>
-                                        </li>
-                                        {{/each}} --}}
-
-                                        {{#each category}}
-                                        <li><a href="#">{{name}}</a></li>
-                                        {{#each categories}}
-                                        <li style="margin-left: 10px;">
-                                            <a href="list-courses?page={{../../current_page}}&category={{name}}">
-                                                {{name}}
-                                            </a>
-                                        </li>
-                                        {{/each}}
-                                        {{/each}}
-
-                                    </ul>
-                                </div>
-                                <div class="mu-single-sidebar">
-                                    <h3>Sắp xếp</h3>
-                                    <ul class="mu-sidebar-catg">
-                                        <li><a href="#">Giá tăng dần</a></li>
-                                        <li><a href="#">Giá giảm dần</a></li>
-                                        <li><a href="#">Điểm sắp xếp tăng dần</a></li>
-                                        <li><a href="#">Điểm sắp xếp giảm dần</a></li>
-                                    </ul>
-                                </div>
-                                <!-- end single sidebar -->
-
-                            </aside>
-                            <!-- / end sidebar -->
                         </div>
                     </div>
                 </div>
