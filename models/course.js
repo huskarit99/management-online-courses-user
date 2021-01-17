@@ -13,6 +13,7 @@ var CourseSchema = new Schema({
     categoryChildCId: { type: String, require: true, max: 50 },
     views: { type: Number },
     status: { type: Number, require: true, max: 2 },
+    isCompleted: { type: Number, require: true },
     subscribers: [{
         userId: { type: Schema.Types.ObjectId, ref: 'User' },
         point: { type: Number, default: 0 },
