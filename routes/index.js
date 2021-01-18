@@ -15,8 +15,6 @@ router.get('/course-detail/:id', courseController.course_detail);
 
 router.get('/course-video', courseController.course_video);
 
-
-
 /* user */
 router.get('/login', userController.login);
 
@@ -38,7 +36,13 @@ router.post('/password', userController.change_password);
 
 router.get('/enrolled-courses', userController.enrolled_courses);
 
-router.get('/add-wishlist/:id', userController.add_remove_wishlist);
+router.get('/add-remove-wishlist/:id', userController.add_remove_wishlist);
+
+router.get('/wishlist', userController.wishlist);
+
+router.get('/enroll/:id', userController.enroll);
+
+router.post('/rating/:id', userController.rating);
 
 /* teacher */
 router.get('/manage-courses', teacherController.manage_courses);
