@@ -94,17 +94,17 @@
         });
 
     </script>
-    <div clmanage"courses-area">
+    <div class="courses-area">
         <div class="container-fluid">
             <div class="row">
-                {{#eachmanagetCoursesInOnePage}}
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                    <div clmanage"courses-inner res-mg-b-30">
-                        <div clmanage"courses-title">
+                {{#each listCoursesInOnePage}}
+                <div class="col-md-12">
+                    <div class="courses-inner res-mg-b-30">
+                        <div class="courses-title">
                             <a href="detail-course"><img src="{{image}}" alt=""></a>
                             <h2>{{name}}</h2>
                         </div>
-                        <div clmanage"courses-alaltic">
+                        <div class="courses-alaltic">
                             <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-heart"></i></span> 50</span>
                             <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-dollar"></i></span>
                                 {{price}} VND</span>

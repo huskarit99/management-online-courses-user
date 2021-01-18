@@ -43,7 +43,7 @@ router.get('/add-wishlist/:id', userController.add_remove_wishlist);
 /* teacher */
 router.get('/manage-courses', teacherController.manage_courses);
 
-router.get('/lock-course', teacherController.lock_teacher);
+router.get('/lock-course', teacherController.lock_course);
 
 router.get('/unlock-course', teacherController.unlock_course);
 

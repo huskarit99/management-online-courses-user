@@ -44,7 +44,7 @@ exports.manage_courses = async (req, res, next) => {
                                 page_number.push((i / 8) + 1);
                             }
                         }
-                        res.render('courses/manage-courses', {
+                        res.render('teachers/manage-courses', {
                             filterByCategory: filterByCategory,
                             filterByUser: filterByUser,
                             users: users,
@@ -78,7 +78,7 @@ exports.manage_courses = async (req, res, next) => {
                                     page_number.push((i / 8) + 1);
                                 }
                             }
-                            res.render('courses/manage-courses', {
+                            res.render('teachers/manage-courses', {
                                 filterByCategory: filterByCategory,
                                 filterByUser: filterByUser,
                                 users: users,
@@ -113,7 +113,7 @@ exports.manage_courses = async (req, res, next) => {
                             page_number.push((i / 8) + 1);
                         }
                     }
-                    res.render('courses/manage-courses', {
+                    res.render('teachers/manage-courses', {
                         filterByCategory: filterByCategory,
                         filterByUser: filterByUser,
                         users: users,
