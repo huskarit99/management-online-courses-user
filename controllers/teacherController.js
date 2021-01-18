@@ -31,7 +31,7 @@ exports.manage_courses = async (req, res, next) => {
                         var listCoursesInOnePage = [],
                             page_number = [];
                         for (let i = 0; i < listCourses.length; i++) {
-                            if (Math.floor(i / 8) == page - 1) {
+                            if (Math.floor(i / 6) == page - 1) {
                                 const data = listCourses[i];
                                 data['page'] = i + 1;
                                 await User.findOne({ _id: data.ownerId }, (err, user) => {
@@ -40,8 +40,8 @@ exports.manage_courses = async (req, res, next) => {
                                 });
                                 listCoursesInOnePage.push(data);
                             }
-                            if (i / 8 == Math.floor(i / 8)) {
-                                page_number.push((i / 8) + 1);
+                            if (i / 6 == Math.floor(i / 6)) {
+                                page_number.push((i / 6) + 1);
                             }
                         }
                         res.render('teachers/manage-courses', {
@@ -65,7 +65,7 @@ exports.manage_courses = async (req, res, next) => {
                             var listCoursesInOnePage = [],
                                 page_number = [];
                             for (let i = 0; i < listCourses.length; i++) {
-                                if (Math.floor(i / 8) == page - 1) {
+                                if (Math.floor(i / 6) == page - 1) {
                                     const data = listCourses[i];
                                     data['page'] = i + 1;
                                     await User.findOne({ _id: data.ownerId }, (err, user) => {
@@ -74,8 +74,8 @@ exports.manage_courses = async (req, res, next) => {
                                     });
                                     listCoursesInOnePage.push(data);
                                 }
-                                if (i / 8 == Math.floor(i / 8)) {
-                                    page_number.push((i / 8) + 1);
+                                if (i / 6 == Math.floor(i / 6)) {
+                                    page_number.push((i / 6) + 1);
                                 }
                             }
                             res.render('teachers/manage-courses', {
@@ -100,7 +100,7 @@ exports.manage_courses = async (req, res, next) => {
                     var listCoursesInOnePage = [],
                         page_number = [];
                     for (let i = 0; i < listCourses.length; i++) {
-                        if (Math.floor(i / 8) == page - 1) {
+                        if (Math.floor(i / 6) == page - 1) {
                             const data = listCourses[i];
                             data['page'] = i + 1;
                             await User.findOne({ _id: data.ownerId }, (err, user) => {
@@ -109,8 +109,8 @@ exports.manage_courses = async (req, res, next) => {
                             });
                             listCoursesInOnePage.push(data);
                         }
-                        if (i / 8 == Math.floor(i / 8)) {
-                            page_number.push((i / 8) + 1);
+                        if (i / 6 == Math.floor(i / 6)) {
+                            page_number.push((i / 6) + 1);
                         }
                     }
                     res.render('teachers/manage-courses', {

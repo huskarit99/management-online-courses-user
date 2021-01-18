@@ -1,57 +1,80 @@
-<div class="all-content-wrapper">
-    <div class="header-advance-area">
-        <div class="breadcome-area">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="breadcome-list">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="z-index: 999;">
-                                    <script>
-                                        var turnOnChild = 0;
-                                        var turnOnChildSubCategories = 0;
-                                        var turnOnChildSubTeachers = 0;
-                                    </script>
-                                    <div id="dropdownParent">
-                                        <button class="btn btn-primary"> Filter by <span
-                                                class="fa fa-angle-right"></span>
-                                        </button>
-                                        <ul id="dropdownChild"
-                                            style="position:absolute; display:block; margin-left:85px; top:0px">
-                                            <li id="dropdownChildCategories" style="top: 0px; position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
-                                             border-radius: 5px;background-color: #fff;">Categories
-                                                <ul id="dropdownChildSubCategories"
-                                                    style="position: absolute; width: 220px; left:100px; top:0px">
-                                                    {{#each categories}}
-                                                    <li style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
-                                             border-radius: 5px;background-color: #fff;"><a style="color:#000;"
-                                                            href="/manage-courses?filterByCategory={{_id}}">{{name}}</a>
-                                                    </li>
-                                                    {{/each}}
-                                                </ul>
+<!-- Page breadcrumb -->
+<section id="mu-page-breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mu-page-breadcrumb-area">
+                    <h2>Quản lý khoá học</h2>
+                    <ol class="breadcrumb">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li class="active">Quản lý khoá học</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="mu-course-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mu-course-content-area">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mu-course-container">
+                                <div class="row">
+                                    {{#each listCoursesInOnePage}}
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="mu-latest-course-single">
+                                            <figure class="mu-latest-course-img">
+                                                <a href="course-detail/{{_id}}"><img src="{{image}}" alt="img"></a>
+                                                <figcaption class="mu-latest-course-imgcaption">
+                                                    {{categoryChildName}}
+                                                </figcaption>
+                                            </figure>
+                                            <div class="mu-latest-course-single-content">
+                                                <h4>{{name}}</h4>
+                                                <p>Giảng viên: {{nameOwner}}</p>
+                                                <p>{{description}}</p>
+                                                <div class="mu-latest-course-single-contbottom">
+                                                    <span class="mu-course-price" href="#">{{price}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                                <div class="custom-pagination" style="margin-bottom: 20px;">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li style="{{isDisplayedPrevious currentPage 1}}" class="page-item"><a
+                                                    class="page-link"
+                                                    href="manage-courses?{{predictPage currentPage -1 filterByCategory filterByUser}}">Previous</a>
                                             </li>
-                                            <li id="dropdownChildTeachers" style="position: relative; color:#000; padding: 10px 15px; border-bottom: 1px solid #a2a2a2; border-left: 1px solid #a2a2a2; border-right: 1px solid #a2a2a2;
-                                             border-radius: 5px; background-color: #fff;">Teachers
-                                                <ul id="dropdownChildSubTeachers"
-                                                    style="position: absolute; width: 220px; left:100px; top:0px">
-                                                    {{#each users}}
-                                                    <li style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
-                                             border-radius: 5px;background-color: #fff;"><a style="color:#000;"
-                                                            href="/manage-courses?filterByUser={{_id}}">{{name}}</a>
-                                                    </li>
-                                                    {{/each}}
-                                                </ul>
+                                            {{#each  page_number}}
+                                            <li class="page-item">
+                                                <a class="page-link" style="{{isCurrentPage ../currentPage this}}"
+                                                    href="manage-courses?{{choosePage this ../filterByCategory ../filterByUser}}">{{this}}</a>
+                                            </li>
+                                            {{/each}}
+                                            <li style="{{isDisplayedNext currentPage page_number.length}}"
+                                                class="page-item"><a class="page-link"
+                                                    href="manage-courses?{{predictPage currentPage 1 filterByCategory filterByUser}}">Next</a>
                                             </li>
                                         </ul>
-                                    </div>
+                                    </nav>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                    <ul class="breadcome-menu">
-                                        <li><a href="#">Trang chủ</a> <span class="bread-slash">/</span>
-                                        </li>
-                                        <li><span class="bread-blod">Danh sách khoá học</span>
-                                        </li>
-                                    </ul>
+                            </div>
+                        </div>
+                        <div class="footer-copyright-area">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="footer-copy-right">
+                                            <p>Copyright © 2018. All rights reserved. Template by <a
+                                                    href="https://colorlib.com/wp/templates/">Colorlib</a></p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -60,168 +83,4 @@
             </div>
         </div>
     </div>
-    <script>
-        $('#dropdownChild').hide();
-        $('#dropdownChildSubTeachers').hide();
-        $('#dropdownChildSubCategories').hide();
-        $('#dropdownParent').hover(() => {
-            if (turnOnChild === 0) {
-                $('#dropdownChild').show();
-
-                turnOnChild = 1;
-            } else {
-                $('#dropdownChild').hide();
-                turnOnChild = 0;
-            }
-        });
-        $('#dropdownChildCategories').hover(() => {
-            if (turnOnChildSubCategories === 0) {
-                $('#dropdownChildSubCategories').show();
-                turnOnChildSubCategories = 1;
-            } else {
-                $('#dropdownChildSubCategories').hide();
-                turnOnChildSubCategories = 0;
-            }
-        });
-        $('#dropdownChildTeachers').hover(() => {
-            if (turnOnChildSubTeachers === 0) {
-                $('#dropdownChildSubTeachers').show();
-                turnOnChildSubTeachers = 1;
-            } else {
-                $('#dropdownChildSubTeachers').hide();
-                turnOnChildSubTeachers = 0;
-            }
-        });
-
-    </script>
-    <div class="courses-area">
-        <div class="container-fluid">
-            <div class="row">
-                {{#each listCoursesInOnePage}}
-                <div class="col-md-12">
-                    <div class="courses-inner res-mg-b-30">
-                        <div class="courses-title">
-                            <a href="detail-course"><img src="{{image}}" alt=""></a>
-                            <h2>{{name}}</h2>
-                        </div>
-                        <div class="courses-alaltic">
-                            <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-heart"></i></span> 50</span>
-                            <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-dollar"></i></span>
-                                {{price}} VND</span>
-                            {{#unless status}}
-                            <button style="float:right" data-toggle="modal" title="Trash" class="pd-setting-ed">
-                                <i class="fa fa-lock" aria-hidden="true" style="color:red"></i>
-                            </button>
-                            {{/unless}}
-                        </div>
-                        <div class="course-des">
-                            <p><span><i class="fa fa-clock"></i></span> <b>Duration: </b> 6 Months</p>
-                            <p><span><i class="fa fa-clock"></i></span> <b>Giáo viên: </b>{{nameOwner}}</p>
-                            <p><span><i class="fa fa-clock"></i></span> <b>Thể loại: </b>{{categoryChildName}}</p>
-                            <p><span><i class="fa fa-clock"></i></span> <b>Học viên: </b> {{subscribers.length}}</p>
-                        </div>
-                        <!-- Delete course -->
-                        <div class="modal fade" id="lockCourse{{_id}}" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Thông
-                                            báo</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Bạn có chắc muốn khoá khóa học "{{this.name}}" này không?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="/lock-course?id={{_id}}">
-                                            <button type="button" class="btn btn-primary">Xoá</button>
-                                        </a>
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Đóng</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Delete course -->
-                        <!-- Delete course -->
-                        <div class="modal fade" id="unLockCourse{{_id}}" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Thông
-                                            báo</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Bạn có chắc muốn mở khóa khóa học "{{this.name}}" này không?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="/unlock-course?id={{_id}}">
-                                            <button style="background-color: red" type="button"
-                                                class="btn btn-primary">Mở</button>
-                                        </a>
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Đóng</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Delete course -->
-                        {{#if status}}
-                        <div class="product-buttons">
-                            <button type="button" class="button-default cart-btn" data-toggle="modal"
-                                data-target="#lockCourse{{_id}}" title="Trash" class="pd-setting-ed">
-                                Gỡ bỏ khoá học</button>
-                        </div>
-                        {{else}}
-                        <div class="product-buttons">
-                            <button style="background-color:red" type="button" class="button-default cart-btn"
-                                data-toggle="modal" data-target="#unLockCourse{{_id}}" title="Trash"
-                                class="pd-setting-ed">
-                                Mở khóa khoá học</button>
-                        </div>
-                        {{/if}}
-                    </div>
-                </div>
-                {{/each}}
-            </div>
-            <div class="custom-pagination" style="margin-bottom: 20px;">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li style="{{isDisplayedPrevious currentPage 1}}" class="page-item"><a class="page-link"
-                                href="manage-courses?{{predictPage currentPage -1 filterByCategory filterByUser}}">Previous</a>
-                        </li>
-                        {{#each  page_number}}
-                        <li class="page-item">
-                            <a class="page-link" style="{{isCurrentPage ../currentPage this}}"
-                                href="manage-courses?{{choosePage this ../filterByCategory ../filterByUser}}">{{this}}</a>
-                        </li>
-                        {{/each}}
-                        <li style="{{isDisplayedNext currentPage page_number.length}}" class="page-item"><a
-                                class="page-link"
-                                href="manage-courses?{{predictPage currentPage 1 filterByCategory filterByUser}}">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <div class="footer-copyright-area">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="footer-copy-right">
-                        <p>Copyright © 2018. All rights reserved. Template by <a
-                                href="https://colorlib.com/wp/templates/">Colorlib</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
