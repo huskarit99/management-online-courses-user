@@ -50,8 +50,12 @@
                                                     <span class="mu-course-price" href="#">{{price}}</span>
                                                     <div id="rateYo{{_id}}" data-rateyo-rating="{{point}}"
                                                         data-rateyo-star-width="20px" data-rateyo-normal-fill="#e9e9e9"
-                                                        data-rateyo-read-only="true">
+                                                        data-rateyo-read-only="true" style="float: left;">
                                                     </div>
+                                                    {{#if (eq num 0)}}
+                                                    {{else}}
+                                                    <span>({{num}})</span>
+                                                    {{/if}}
                                                 </div>
                                             </div>
                                         </div>
@@ -123,17 +127,7 @@
 
                                     </ul>
                                 </div>
-                                <div class="mu-single-sidebar">
-                                    <h3>Sắp xếp</h3>
-                                    <ul class="mu-sidebar-catg">
-                                        <li><a href="#">Giá tăng dần</a></li>
-                                        <li><a href="#">Giá giảm dần</a></li>
-                                        <li><a href="#">Điểm sắp xếp tăng dần</a></li>
-                                        <li><a href="#">Điểm sắp xếp giảm dần</a></li>
-                                    </ul>
-                                </div>
                                 <!-- end single sidebar -->
-
                             </aside>
                             <!-- / end sidebar -->
                         </div>

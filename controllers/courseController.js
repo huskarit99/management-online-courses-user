@@ -20,6 +20,22 @@ exports.list_courses = (req, res, next) => {
                         if (err) return next(err);
                         data['nameOwner'] = user['name'];
                     });
+                    var point = 0;
+                    var num = 0;
+                    if (course[i].subscribers.length != 0) {
+                        for (var j = 0; j < course[i].subscribers.length; j++) {
+                            if (course[i].subscribers[j].point > 0) {
+                                point = point + course[i].subscribers[j].point;
+                                num++;
+                            }
+                        }
+                        if (num > 0) {
+                            point = point / num;
+                        }
+                        data['point'] = point;
+                        data['num'] = num;
+
+                    }
                     list_courses.push(data);
                 }
                 if (i / 8 == Math.floor(i / 8)) {
@@ -63,6 +79,22 @@ exports.list_courses = (req, res, next) => {
                         if (err) return next(err);
                         data['nameOwner'] = user['name'];
                     });
+                    var point = 0;
+                    var num = 0;
+                    if (course[i].subscribers.length != 0) {
+                        for (var j = 0; j < course[i].subscribers.length; j++) {
+                            if (course[i].subscribers[j].point > 0) {
+                                point = point + course[i].subscribers[j].point;
+                                num++;
+                            }
+                        }
+                        if (num > 0) {
+                            point = point / num;
+                        }
+                        data['point'] = point;
+                        data['num'] = num;
+
+                    }
                     list_courses.push(data);
                 }
                 if (i / 8 == Math.floor(i / 8)) {
@@ -124,7 +156,6 @@ exports.course_detail = (req, res, next) => {
         }
         if (course_detail.subscribers.length != 0) {
             for (var i = 0; i < course_detail.subscribers.length; i++) {
-                point = point + course_detail.subscribers[i].point;
                 if (req.session.userSession && check == 0) {
 
                     if (req.session.userSession._id == course_detail.subscribers[i].userId) {
@@ -137,10 +168,13 @@ exports.course_detail = (req, res, next) => {
                     }
                 }
                 if (course_detail.subscribers[i].point > 0) {
+                    point = point + course_detail.subscribers[i].point;
                     num++;
                 }
             }
-            point = point / course_detail.subscribers.length;
+            if (num > 0) {
+                point = point / num;
+            }
         }
         console.log(check_rating);
         course_detail.price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course_detail.price);
