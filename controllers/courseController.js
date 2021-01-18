@@ -6,7 +6,7 @@ exports.list_courses = (req, res, next) => {
     const category = req.query.category || "none";
     const page = Number(req.query.page) || Number(1);
     if (category == "none") {
-        Course.find({ status: 1 }).lean().exec(async function(err, course) {
+        Course.find({ status: 1 }).lean().exec(async function (err, course) {
             var list_courses = [],
                 page_number = [],
                 i = 0;
@@ -27,7 +27,7 @@ exports.list_courses = (req, res, next) => {
                 }
                 i++;
             }
-            Category.find({ status: 1 }).lean().exec(function(err, category) {
+            Category.find({ status: 1 }).lean().exec(function (err, category) {
                 if (err) return next(err);
                 for (var i = 0; i < category.length; i++) {
                     if (!category[i].categories) continue;
@@ -49,7 +49,7 @@ exports.list_courses = (req, res, next) => {
             });
         });
     } else {
-        Course.find({ status: 1, categoryChildName: category }).lean().exec(async function(err, course) {
+        Course.find({ status: 1, categoryChildName: category }).lean().exec(async function (err, course) {
             var list_courses = [],
                 page_number = [],
                 i = 0;
@@ -71,7 +71,7 @@ exports.list_courses = (req, res, next) => {
                 i++;
             }
 
-            Category.find({ status: 1 }).lean().exec(function(err, category) {
+            Category.find({ status: 1 }).lean().exec(function (err, category) {
                 if (err) return next(err);
                 for (var i = 0; i < category.length; i++) {
                     if (!category[i].categories) continue;
@@ -98,7 +98,7 @@ exports.list_courses = (req, res, next) => {
 exports.course_detail = (req, res, next) => {
     let id = req.params.id;
 
-    Course.findOne({ _id: id }).lean().exec(async function(err, course_detail) {
+    Course.findOne({ _id: id }).lean().exec(async function (err, course_detail) {
         let data = course_detail;
         await User.findOne({ _id: course_detail.ownerId }, (err, user) => {
             if (err) return next(err);
@@ -116,28 +116,36 @@ exports.course_detail = (req, res, next) => {
         }
         let num_order = [];
         let num = 0
-        let point = 0.0;
+        let point = 0;
         let check = 0
+        let check_rating = 0;
         for (var i = 1; i <= course_detail.videos.length; i++) {
             num_order.push(i);
         }
-        for (var i = 0; i < course_detail.subscribers.length; i++) {
-            point = point + course_detail.subscribers[i].point;
-            if (req.session.userSession && check == 0) {
+        if (course_detail.subscribers.length != 0) {
+            for (var i = 0; i < course_detail.subscribers.length; i++) {
+                point = point + course_detail.subscribers[i].point;
+                if (req.session.userSession && check == 0) {
 
-                if (req.session.userSession._id == course_detail.subscribers[i].userId) {
-                    check = 1;
-                } else {
-                    check = 0;
+                    if (req.session.userSession._id == course_detail.subscribers[i].userId) {
+                        check = 1;
+                        if (course_detail.subscribers[i].point < 1) {
+                            check_rating = 1;
+                        }
+                    } else {
+                        check = 0;
+                    }
+                }
+                if (course_detail.subscribers[i].point > 0) {
+                    num++;
                 }
             }
-            if (course_detail.subscribers[i].comment !== "") {
-                num++;
-            }
+            point = point / course_detail.subscribers.length;
         }
+        console.log(check_rating);
         course_detail.price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course_detail.price);
-        point = point / course_detail.subscribers.length;
-        Course.find({ categoryChildName: course_detail.categoryChildName }).lean().exec(function(err, course) {
+
+        Course.find({ categoryChildName: course_detail.categoryChildName }).lean().exec(function (err, course) {
             for (var i = 0; i < course.length - 1; i++) {
                 for (var j = i + 1; j < course.length; j++) {
                     if (course[i].subscribers.length < course[j].subscribers.length) {
@@ -171,9 +179,9 @@ exports.course_detail = (req, res, next) => {
             }
             console.log(check_heart);
 
-            Course.findOne({ _id: id }, function(err, course_view) {
+            Course.findOne({ _id: id }, function (err, course_view) {
                 course_view.views = course_view.views + 1;
-                course_view.save(function(err, result) {});
+                course_view.save(function (err, result) { });
                 res.render('courses/course-detail', {
                     num: num,
                     point: point,
@@ -181,7 +189,8 @@ exports.course_detail = (req, res, next) => {
                     course: course_detail,
                     course_popular: course_popular,
                     check: check,
-                    check_heart: check_heart
+                    check_heart: check_heart,
+                    check_rating: check_rating
                 });
             });
         })
@@ -192,7 +201,7 @@ exports.course_detail = (req, res, next) => {
 exports.course_video = (req, res, next) => {
     let id_course = req.query.idcourse;
     let id_video = req.query.idvideo;
-    Course.findById(id_course).lean().exec(function(err, course) {
+    Course.findById(id_course).lean().exec(function (err, course) {
         if (err) { return next(err) };
         let video;
         let num;
