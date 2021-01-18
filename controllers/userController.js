@@ -278,12 +278,28 @@ exports.enroll = (req, res, next) => {
             console.log(course);
             let userId = req.session.userSession._id;
             console.log(userId);
-            course.subscribers.push({ userId });
+            let point = 0;
+            course.subscribers.push({ userId, point });
             course.save();
             res.redirect('back');
         })
     } else {
         res.redirect('/login');
     }
-
+}
+exports.rating = (req, res, next) => {
+    if (req.session.userSession) {
+        let point = req.body.rating;
+        let comment = req.body.comment;
+        let id = req.params.id;
+        Course.findOne({ _id: id }, function(err, course) {
+            let itemIndex = course.subscribers.findIndex(p => p.userId == req.session.userSession._id);
+            course.subscribers[itemIndex].point = point;
+            course.subscribers[itemIndex].comment = comment;
+            course.save();
+            res.redirect('back');
+        })
+    } else {
+        res.redirect('/login');
+    }
 }

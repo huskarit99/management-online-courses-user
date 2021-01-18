@@ -116,27 +116,35 @@ exports.course_detail = (req, res, next) => {
         }
         let num_order = [];
         let num = 0
-        let point = 0.0;
+        let point = 0;
         let check = 0
+        let check_rating = 0;
         for (var i = 1; i <= course_detail.videos.length; i++) {
             num_order.push(i);
         }
-        for (var i = 0; i < course_detail.subscribers.length; i++) {
-            point = point + course_detail.subscribers[i].point;
-            if (req.session.userSession && check == 0) {
+        if (course_detail.subscribers.length != 0) {
+            for (var i = 0; i < course_detail.subscribers.length; i++) {
+                point = point + course_detail.subscribers[i].point;
+                if (req.session.userSession && check == 0) {
 
-                if (req.session.userSession._id == course_detail.subscribers[i].userId) {
-                    check = 1;
-                } else {
-                    check = 0;
+                    if (req.session.userSession._id == course_detail.subscribers[i].userId) {
+                        check = 1;
+                        if (course_detail.subscribers[i].point < 1) {
+                            check_rating = 1;
+                        }
+                    } else {
+                        check = 0;
+                    }
+                }
+                if (course_detail.subscribers[i].point > 0) {
+                    num++;
                 }
             }
-            if (course_detail.subscribers[i].comment !== "") {
-                num++;
-            }
+            point = point / course_detail.subscribers.length;
         }
+        console.log(check_rating);
         course_detail.price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course_detail.price);
-        point = point / course_detail.subscribers.length;
+
         Course.find({ categoryChildName: course_detail.categoryChildName }).lean().exec(function(err, course) {
             for (var i = 0; i < course.length - 1; i++) {
                 for (var j = i + 1; j < course.length; j++) {
@@ -181,7 +189,8 @@ exports.course_detail = (req, res, next) => {
                     course: course_detail,
                     course_popular: course_popular,
                     check: check,
-                    check_heart: check_heart
+                    check_heart: check_heart,
+                    check_rating: check_rating
                 });
             });
         })

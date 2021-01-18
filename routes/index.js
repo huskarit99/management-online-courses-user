@@ -43,4 +43,6 @@ router.get('/wishlist', userController.wishlist);
 
 router.get('/enroll/:id', userController.enroll);
 
+router.post('/rating/:id', userController.rating);
+
 module.exports = router;

@@ -40,7 +40,18 @@
                                                 <p>Giảng viên: {{nameOwner}}</p>
                                                 <p>{{description}}</p>
                                                 <div class="mu-latest-course-single-contbottom">
+                                                    <script>
+                                                        $(function () {
+
+                                                            $("#rateYo{{_id}}").rateYo()
+
+                                                        });
+                                                    </script>
                                                     <span class="mu-course-price" href="#">{{price}}</span>
+                                                    <div id="rateYo{{_id}}" data-rateyo-rating="{{point}}"
+                                                        data-rateyo-star-width="20px" data-rateyo-normal-fill="#e9e9e9"
+                                                        data-rateyo-read-only="true">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
