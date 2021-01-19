@@ -5,7 +5,7 @@ var courseController = require('../controllers/courseController');
 var userController = require('../controllers/userController');
 const user = require('../models/user');
 
-/* GET home page. */
+/* guest. */
 router.get('/', homeController.index);
 
 router.get('/list-courses', courseController.list_courses);
@@ -14,7 +14,7 @@ router.get('/course-detail/:id', courseController.course_detail);
 
 router.get('/course-video', courseController.course_video);
 
-
+router.get('/search-course', courseController.search_course);
 
 /* user */
 router.get('/login', userController.login);

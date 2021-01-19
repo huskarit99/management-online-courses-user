@@ -3,9 +3,9 @@ var User = require('../models/user');
 var Category = require('../models/category');
 
 exports.list_courses = (req, res, next) => {
-    const category = req.query.category || "none";
+    const category_name = req.query.category || "none";
     const page = Number(req.query.page) || Number(1);
-    if (category == "none") {
+    if (category_name == "none") {
         Course.find({ status: 1 }).lean().exec(async function(err, course) {
             var list_courses = [],
                 page_number = [],
@@ -65,7 +65,7 @@ exports.list_courses = (req, res, next) => {
             });
         });
     } else {
-        Course.find({ status: 1, categoryChildName: category }).lean().exec(async function(err, course) {
+        Course.find({ status: 1, categoryChildName: category_name }).lean().exec(async function(err, course) {
             var list_courses = [],
                 page_number = [],
                 i = 0;
@@ -120,7 +120,8 @@ exports.list_courses = (req, res, next) => {
                     list_courses: list_courses,
                     category: category,
                     page_number: page_number,
-                    current_page: page
+                    current_page: page,
+                    category_name: category_name
                 });
             });
         });
@@ -266,4 +267,176 @@ exports.course_video = (req, res, next) => {
             check: check
         });
     })
+}
+
+exports.search_course = (req, res, next) => {
+    let search = req.query.search;
+    let page = Number(req.query.page) || Number(1);
+    if (req.query.sortbyprice) {
+        let sortbyprice = req.query.sortbyprice;
+        Course.find({ name: { "$regex": search, "$options": "i" } }).lean().sort([
+            ['price', sortbyprice]
+        ]).exec(async function(err, course) {
+            if (err) return next(err);
+            var list_courses = [],
+                page_number = [],
+                i = 0;
+            for (let _i = 0; _i < course.length; _i++) {
+                if (course[_i].status == 0) continue;
+                if (Math.floor(i / 8) == page - 1) {
+                    course[i].price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course[i].price);
+                    const data = course[i];
+                    data['page'] = i + 1;
+                    await User.findOne({ _id: data.ownerId }, (err, user) => {
+                        if (err) return next(err);
+                        data['nameOwner'] = user['name'];
+                    });
+                    var point = 0;
+                    var num = 0;
+                    if (course[i].subscribers.length != 0) {
+                        for (var j = 0; j < course[i].subscribers.length; j++) {
+                            if (course[i].subscribers[j].point > 0) {
+                                point = point + course[i].subscribers[j].point;
+                                num++;
+                            }
+                        }
+                        if (num > 0) {
+                            point = point / num;
+                        }
+                        data['point'] = point;
+                        data['num'] = num;
+
+                    }
+                    list_courses.push(data);
+                }
+                if (i / 8 == Math.floor(i / 8)) {
+                    page_number.push((i / 8) + 1);
+                }
+                i++;
+            }
+            res.render('courses/search-course', {
+                list_courses: list_courses,
+                page_number: page_number,
+                current_page: page,
+                search: search,
+                sortbyprice: sortbyprice
+            });
+        });
+    } else if (req.query.sortbypoint) {
+        let sortbypoint = req.query.sortbypoint;
+        Course.find({ name: { "$regex": search, "$options": "i" } }).lean().exec(async function(err, course) {
+            if (err) return next(err);
+            var list_courses = [],
+                page_number = [],
+                i = 0;
+            for (let _i = 0; _i < course.length; _i++) {
+                if (course[_i].status == 0) continue;
+                if (Math.floor(i / 8) == page - 1) {
+                    course[i].price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course[i].price);
+                    const data = course[i];
+                    data['page'] = i + 1;
+                    await User.findOne({ _id: data.ownerId }, (err, user) => {
+                        if (err) return next(err);
+                        data['nameOwner'] = user['name'];
+                    });
+                    var point = 0;
+                    var num = 0;
+                    if (course[i].subscribers.length != 0) {
+                        for (var j = 0; j < course[i].subscribers.length; j++) {
+                            if (course[i].subscribers[j].point > 0) {
+                                point = point + course[i].subscribers[j].point;
+                                num++;
+                            }
+                        }
+                        if (num > 0) {
+                            point = point / num;
+                        }
+                        data['point'] = point;
+                        data['num'] = num;
+
+                    }
+                    list_courses.push(data);
+                }
+                if (i / 8 == Math.floor(i / 8)) {
+                    page_number.push((i / 8) + 1);
+                }
+                i++;
+            }
+            if (req.query.sortbypoint == 'ascending') {
+                for (var i = 0; i < list_courses.length - 1; i++) {
+                    for (var j = i + 1; j < list_courses.length; j++) {
+                        if (list_courses[i].point > list_courses[j].point) {
+                            const tmp = list_courses[i];
+                            list_courses[i] = list_courses[j];
+                            list_courses[j] = tmp;
+                        }
+                    }
+                }
+            } else {
+                for (var i = 0; i < list_courses.length - 1; i++) {
+                    for (var j = i + 1; j < list_courses.length; j++) {
+                        if (list_courses[i].point < list_courses[j].point) {
+                            const tmp = list_courses[i];
+                            list_courses[i] = list_courses[j];
+                            list_courses[j] = tmp;
+                        }
+                    }
+                }
+            }
+            res.render('courses/search-course', {
+                list_courses: list_courses,
+                page_number: page_number,
+                current_page: page,
+                search: search,
+                sortbypoint: sortbypoint
+            });
+        });
+    } else {
+        Course.find({ name: { "$regex": search, "$options": "i" } }).lean().exec(async function(err, course) {
+            if (err) return next(err);
+            var list_courses = [],
+                page_number = [],
+                i = 0;
+            for (let _i = 0; _i < course.length; _i++) {
+                if (course[_i].status == 0) continue;
+                if (Math.floor(i / 8) == page - 1) {
+                    course[i].price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course[i].price);
+                    const data = course[i];
+                    data['page'] = i + 1;
+                    await User.findOne({ _id: data.ownerId }, (err, user) => {
+                        if (err) return next(err);
+                        data['nameOwner'] = user['name'];
+                    });
+                    var point = 0;
+                    var num = 0;
+                    if (course[i].subscribers.length != 0) {
+                        for (var j = 0; j < course[i].subscribers.length; j++) {
+                            if (course[i].subscribers[j].point > 0) {
+                                point = point + course[i].subscribers[j].point;
+                                num++;
+                            }
+                        }
+                        if (num > 0) {
+                            point = point / num;
+                        }
+                        data['point'] = point;
+                        data['num'] = num;
+
+                    }
+                    list_courses.push(data);
+                }
+                if (i / 8 == Math.floor(i / 8)) {
+                    page_number.push((i / 8) + 1);
+                }
+                i++;
+            }
+            res.render('courses/search-course', {
+                list_courses: list_courses,
+                page_number: page_number,
+                current_page: page,
+                search: search
+            });
+        });
+    }
+
 }

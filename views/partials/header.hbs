@@ -95,13 +95,34 @@
                     </li>
                     {{/if}}
                     {{else}}
-                    <li><a href="/login">Đăng nhập</a></li> 
+                    <li><a href="/login">Đăng nhập</a></li>
                     {{/if}}
-                    
-                    
+
+
                     <li><a href="contact.html">Contact</a></li>
                     <li><a href="404.html">404 Page</a></li>
-                    <li><a href="#" id="mu-search-icon"><i class="fa fa-search"></i></a></li>
+                    <li><a data-toggle="modal" data-target="#exampleModal"><i class="fa fa-search"></i></a></li>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Tìm kiếm</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="acount-infor" action="/search-course" class="acount-infor" method="get">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="search"
+                                                placeholder="Tìm kiếm" style="padding: 10px;" required>
+                                        </div>
+                                        <div class="modal-footer" >
+                                            <button type="submit" class="btn btn-primary" style="background-color: #01bafd">Tìm kiếm</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                 </ul>
             </div>
             <!--/.nav-collapse -->

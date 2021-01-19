@@ -4,10 +4,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="mu-page-breadcrumb-area">
-                    <h2>Khoá học</h2>
+                    <h2>Tìm kiếm khoá học</h2>
                     <ol class="breadcrumb">
                         <li><a href="/">Trang chủ</a></li>
-                        <li class="active">Khoá học</li>
+                        <li class="active">Tìm kiếm khoá học</li>
                     </ol>
                 </div>
             </div>
@@ -68,42 +68,41 @@
                             <div class="mu-pagination">
                                 <nav>
                                     <ul class="pagination">
-                                        {{#if category_name}}
+                                        {{#if sortbyprice}}
                                         <li style="{{isDisplayedPrevious current_page 1}}">
-                                            <a href="list-courses?page={{predictPage current_page -1}}&category={{category_name}}"
+                                            <a href="list-courses?page={{predictPage current_page -1}}&search={{search}}&sortbyprice={{sortbyprice}}"
                                                 aria-label="Previous">
                                                 <span class="fa fa-angle-left"></span> Prev
                                             </a>
                                         </li>
                                         {{#each page_number}}
                                         <li><a style="{{isCurrentPage ../current_page this}}"
-                                                href="list-courses?page={{this}}&category={{../category_name}}">{{this}}</a></li>
+                                                href="list-courses?page={{this}}&search={{../search}}&sortbyprice={{../sortbyprice}}">{{this}}</a></li>
                                         {{/each}}
                                         <li style="{{isDisplayedNext current_page page_number.length}}">
-                                            <a href="list-courses?page={{predictPage current_page 1}}&category={{category_name}}"
+                                            <a href="list-courses?page={{predictPage current_page 1}}&search={{search}}&sortbyprice={{sortbyprice}}"
                                                 aria-label="Next">
                                                 Next <span class="fa fa-angle-right"></span>
                                             </a>
                                         </li>
-                                        {{else}}
+                                        {{else if sortbypoint}}
                                         <li style="{{isDisplayedPrevious current_page 1}}">
-                                            <a href="list-courses?page={{predictPage current_page -1}}"
+                                            <a href="list-courses?page={{predictPage current_page -1}}&search={{search}}&sortbypoint={{sortbypoint}}"
                                                 aria-label="Previous">
                                                 <span class="fa fa-angle-left"></span> Prev
                                             </a>
                                         </li>
                                         {{#each page_number}}
                                         <li><a style="{{isCurrentPage ../current_page this}}"
-                                                href="list-courses?page={{this}}">{{this}}</a></li>
+                                                href="list-courses?page={{this}}&search={{../search}}&sortbypoint={{../sortbypoint}}">{{this}}</a></li>
                                         {{/each}}
                                         <li style="{{isDisplayedNext current_page page_number.length}}">
-                                            <a href="list-courses?page={{predictPage current_page 1}}"
+                                            <a href="list-courses?page={{predictPage current_page 1}}&search={{search}}&sortbypoint={{sortbypoint}}"
                                                 aria-label="Next">
                                                 Next <span class="fa fa-angle-right"></span>
                                             </a>
                                         </li>
                                         {{/if}}
-                                        
                                     </ul>
                                 </nav>
                             </div>
@@ -114,36 +113,12 @@
                             <aside class="mu-sidebar">
                                 <!-- start single sidebar -->
                                 <div class="mu-single-sidebar">
-                                    <h3>Danh mục</h3>
+                                    <h3>Sắp xếp</h3>
                                     <ul class="mu-sidebar-catg">
-                                        {{!-- {{#each category}}
-                                        <li class="main-nav-list">
-                                            <a class="collapsed" data-toggle="collapse" href="#category{{_id}}"
-                                                aria-controls="category">{{name}}</a>
-                                            <ul class="collapse" id="category{{_id}}" data-toggle="collapse"
-                                                aria-controls="category">
-                                                {{#each categories}}
-                                                <li>
-                                                    <a
-                                                        href="list-courses?page={{../../current_page}}&category={{name}}">
-                                                        {{name}}
-                                                    </a>
-                                                </li>
-                                                {{/each}}
-                                            </ul>
-                                        </li>
-                                        {{/each}} --}}
-
-                                        {{#each category}}
-                                        <li><a href="#">{{name}}</a></li>
-                                        {{#each categories}}
-                                        <li style="margin-left: 10px;">
-                                            <a href="list-courses?page={{../../current_page}}&category={{name}}">
-                                                {{name}}
-                                            </a>
-                                        </li>
-                                        {{/each}}
-                                        {{/each}}
+                                        <li><a href="/search-course?page={{current_page}}&search={{search}}&sortbyprice=ascending">Giá tăng dần</a></li>
+                                        <li><a href="/search-course?page={{current_page}}&search={{search}}&sortbyprice=descending">Giá giảm dần</a></li>
+                                        <li><a href="/search-course?page={{current_page}}&search={{search}}&sortbypoint=ascending">Điểm đánh giá tăng dần</a></li>
+                                        <li><a href="/search-course?page={{current_page}}&search={{search}}&sortbypoint=descending">Điểm đánh giá giảm dần</a></li>
                                     </ul>
                                 </div>
                                 <!-- end single sidebar -->
