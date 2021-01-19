@@ -119,7 +119,6 @@ exports.edit_course = (req, res, next) => {
                 point = point / num;
             }
         }
-        console.log(check_rating);
         course_detail.price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course_detail.price);
 
         Course.find({ categoryChildName: course_detail.categoryChildName }).lean().exec(function (err, course) {
@@ -152,14 +151,11 @@ exports.edit_course = (req, res, next) => {
                 } else {
                     check_heart = 0;
                 }
-
             }
-            console.log(check_heart);
-
             Course.findOne({ _id: id }, function (err, course_view) {
                 course_view.views = course_view.views + 1;
                 course_view.save(function (err, result) { });
-                res.render('courses/course-detail', {
+                res.render('teachers/edit-course', {
                     num: num,
                     point: point,
                     num_order: num_order,
