@@ -132,7 +132,7 @@ exports.edit_course = (req, res, next) => {
                 }
             }
             let course_popular = [];
-            if (course.length < 4) {
+            if (course.length <= 5) {
                 for (var i = 0; i < course.length; i++) {
                     course[i].price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course[i].price);
                     course_popular.push(course[i]);
