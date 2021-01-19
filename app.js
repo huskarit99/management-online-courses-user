@@ -28,24 +28,10 @@ app.engine('hbs', hbs({
     defaultLayout: 'layout',
     layoutDir: __dirname + '/views/layouts/',
     helpers: {
-        predictPage: (currentPage, step, filterByCategory, filterByUser) => {
-            if (filterByCategory) {
-                return "page=" + (currentPage + step).toString() + "&filterByCategory=" + (filterByCategory).toString();
-            } else {
-                if (filterByUser) {
-                    return "page=" + (currentPage + step).toString() + "&filterByUser=" + (filterByUser).toString();
-                }
-            }
+        predictPage: (currentPage, step) => {
             return "page=" + (currentPage + step).toString();
         },
-        choosePage: (page, filterByCategory, filterByUser) => {
-            if (filterByCategory) {
-                return "page=" + (page).toString() + "&filterByCategory=" + (filterByCategory).toString();
-            } else {
-                if (filterByUser) {
-                    return "page=" + (page).toString() + "&filterByUser=" + (filterByUser).toString();
-                }
-            }
+        choosePage: (page) => {
             return "page=" + (page).toString();
         },
         isDisplayedNext: (currentPage, maxPage) => {
