@@ -9,12 +9,12 @@ exports.login = (req, res, next) => {
 }
 
 passport.use(new LocalStrategy({
-        passReqToCallback: true,
-        usernameField: 'username',
-        passwordField: 'password'
-    },
-    function(req, usernameField, passwordField, done) {
-        User.findOne({ username: usernameField, status: 1 }, function(err, user) {
+    passReqToCallback: true,
+    usernameField: 'username',
+    passwordField: 'password'
+},
+    function (req, usernameField, passwordField, done) {
+        User.findOne({ username: usernameField, status: 1 }, function (err, user) {
             if (err) { return done(err); }
             if (!user) {
                 return done(null, false, { message: 'Incorrect username.' });
@@ -34,11 +34,11 @@ passport.use(new LocalStrategy({
 passport.serializeUser((user, done) => done(null, user));
 
 exports.user_login = passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/login',
-        failureFlash: true
-    }),
-    function(req, res) {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+}),
+    function (req, res) {
         res.redirect('/');
     }
 
@@ -57,12 +57,12 @@ exports.post_register = (req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
     User.findOne({ username: req.body.username },
-        function(err, user) {
+        function (err, user) {
             if (err) return next(err);
             if (user !== null) {
                 res.render('users/register', { message: 'Username already exist' });
             } else {
-                User.findOne({ email: email }, function(err, user_email) {
+                User.findOne({ email: email }, function (err, user_email) {
                     if (err) { return next(err) }
                     if (user_email !== null) {
                         res.render('users/register', { message: 'Email already exist' });
@@ -76,7 +76,7 @@ exports.post_register = (req, res, next) => {
                             role: 2,
                             status: 1
                         });
-                        user_email.save(function(err, result) {});
+                        user_email.save(function (err, result) { });
                         res.redirect('/login');
                     }
                 });
@@ -91,35 +91,35 @@ exports.edit_profile = (req, res, next) => {
     let email = req.body.email;
     let name = req.body.name;
     let username = req.session.userSession.username;
-    User.findOne({ username: username }, function(err, user) {
+    User.findOne({ username: username }, function (err, user) {
         if (user !== null) {
             if (user.name !== name) {
                 user.name = name;
                 if (user.email !== email) {
-                    User.findOne({ email: email }, function(err, user_email) {
+                    User.findOne({ email: email }, function (err, user_email) {
                         if (user_email !== null) {
                             res.render("users/profile", { message: 'Email already exist' });
                         } else {
                             user.email = email;
                             req.session.userSession = user;
-                            user.save(function(err, result) {});
+                            user.save(function (err, result) { });
                             res.redirect('/profile');
                         }
                     });
                 } else {
                     req.session.userSession = user;
-                    user.save(function(err, result) {});
+                    user.save(function (err, result) { });
                     res.redirect('/profile');
                 }
             } else {
                 if (user.email !== email) {
-                    User.findOne({ email: email }, function(err, user_email) {
+                    User.findOne({ email: email }, function (err, user_email) {
                         if (user_email !== null) {
                             res.render("users/profile", { message: 'Email already exist' });
                         } else {
                             user.email = email;
                             req.session.userSession = user;
-                            user.save(function(err, result) {});
+                            user.save(function (err, result) { });
                             res.redirect('/profile');
                         }
                     });
@@ -140,7 +140,7 @@ exports.change_password = (req, res, next) => {
     let oldpassword = req.body.oldpassword;
     let newpassword = req.body.newpassword;
     let confirmpassword = req.body.confirmpassword;
-    User.findOne({ username: req.session.userSession.username }, function(err, user) {
+    User.findOne({ username: req.session.userSession.username }, function (err, user) {
         if (err) { return done(err); }
         if (user !== null) {
             var hash = user.password;
@@ -148,7 +148,7 @@ exports.change_password = (req, res, next) => {
                 if (oldpassword != newpassword) {
                     if (newpassword == confirmpassword) {
                         user.password = bcrypt.hashSync(newpassword, bcrypt.genSaltSync(10));
-                        user.save(function(err, result) {});
+                        user.save(function (err, result) { });
                         res.redirect('/profile');
                     } else {
                         res.render("users/password", { message: 'Wrond new password' });
@@ -168,7 +168,7 @@ exports.change_password = (req, res, next) => {
 exports.enrolled_courses = (req, res, next) => {
     if (req.session.userSession) {
         const page = Number(req.query.page) || Number(1);
-        Course.find({ status: 1 }).lean().exec(async function(err, course) {
+        Course.find({ status: 1 }).lean().exec(async function (err, course) {
             var list_courses = [],
                 page_number = [],
                 i = 0;
@@ -214,9 +214,9 @@ exports.enrolled_courses = (req, res, next) => {
 exports.add_remove_wishlist = (req, res, next) => {
     if (req.session.userSession) {
         let id = req.params.id;
-        Course.findOne({ _id: id }, function(err, course) {
+        Course.findOne({ _id: id }, function (err, course) {
             if (err) return next(err);
-            User.findOne({ _id: req.session.userSession._id }, function(err, user) {
+            User.findOne({ _id: req.session.userSession._id }, function (err, user) {
                 if (err) return next(err);
                 let itemIndex = user.wishlist.findIndex(p => p.courseId == id);
                 if (itemIndex > -1) {
@@ -240,11 +240,11 @@ exports.add_remove_wishlist = (req, res, next) => {
 
 exports.wishlist = (req, res, next) => {
     if (req.session.userSession) {
-        User.findOne({ _id: req.session.userSession._id }).lean().exec(async function(err, user) {
+        User.findOne({ _id: req.session.userSession._id }).lean().exec(async function (err, user) {
             for (var i = 0; i < user.wishlist.length; i++) {
                 var data = user.wishlist[i];
                 await new Promise((rs1, rj1) => {
-                    Course.findOne({ _id: data.courseId }, async function(err, course) {
+                    Course.findOne({ _id: data.courseId }, async function (err, course) {
                         if (err) return next(err);
                         data['image'] = course.image;
                         data['categoryChildName'] = course.categoryChildName;
@@ -269,12 +269,11 @@ exports.wishlist = (req, res, next) => {
     } else {
         res.redirect('/login');
     }
-
 }
 exports.enroll = (req, res, next) => {
     if (req.session.userSession) {
         let id = req.params.id;
-        Course.findOne({ _id: id }, function(err, course) {
+        Course.findOne({ _id: id }, function (err, course) {
             console.log(course);
             let userId = req.session.userSession._id;
             console.log(userId);
@@ -292,7 +291,7 @@ exports.rating = (req, res, next) => {
         let point = req.body.rating;
         let comment = req.body.comment;
         let id = req.params.id;
-        Course.findOne({ _id: id }, function(err, course) {
+        Course.findOne({ _id: id }, function (err, course) {
             let itemIndex = course.subscribers.findIndex(p => p.userId == req.session.userSession._id);
             course.subscribers[itemIndex].point = point;
             course.subscribers[itemIndex].comment = comment;
