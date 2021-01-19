@@ -219,6 +219,7 @@ exports.course_detail = (req, res, next) => {
                 course_view.save(function (err, result) { });
                 res.render('courses/course-detail', {
                     num: num,
+                    role: req.session.userSession.role,
                     point: point,
                     num_order: num_order,
                     course: course_detail,

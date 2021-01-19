@@ -31,7 +31,14 @@
                                                 <a href="#">
                                                     <img src="{{course.image}}" alt="img"></a>
                                                 <figcaption class="mu-latest-course-imgcaption">
-                                                    <a href="#">{{course.categoryChildName}}</a>
+                                                    <a style="float:left; margin-top:10px"
+                                                        href="#">{{course.categoryChildName}}</a>
+                                                    {{#if (isTeacher role)}}
+                                                    <button style="float:right;" class="btn btn-primary">
+                                                        <a style="color:white" href="/edit-course/{{course._id}}">Chỉnh
+                                                            sửa khóa
+                                                            học</a></button>
+                                                    {{/if}}
                                                 </figcaption>
 
                                             </figure>
