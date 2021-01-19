@@ -1,0 +1,263 @@
+<!-- Page breadcrumb -->
+<section id="mu-page-breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mu-page-breadcrumb-area">
+                    <h2>Chi tiết khoá học</h2>
+                    <ol class="breadcrumb">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li class="active">Chi tiết khoá học</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End breadcrumb -->
+<section id="mu-course-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mu-course-content-area">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <!-- start course content container -->
+                            <div class="mu-course-container mu-course-details">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mu-latest-course-single">
+                                            <figure class="mu-latest-course-img">
+                                                <a href="#"><img src="{{course.image}}" alt="img"></a>
+                                                <figcaption class="mu-latest-course-imgcaption">
+                                                    <a href="#">{{course.categoryChildName}}</a>
+                                                </figcaption>
+
+                                            </figure>
+                                            <div class="mu-latest-course-single-content">
+
+                                                <h2 style="float: left;">{{course.name}}</h2>
+                                                {{#if session.userSession}}
+                                                {{#if (eq check_heart 1)}}
+                                                <h2 style="text-align: right;">
+                                                    <a class="button" href="/add-remove-wishlist/{{course._id}}"
+                                                        style="color: red;">
+                                                        <span>
+                                                            <i class="fa fa-heart" aria-hidden="true"></i>
+                                                        </span>
+                                                    </a>
+                                                </h2>
+                                                {{else}}
+                                                <h2 style="text-align: right;">
+                                                    <a class="button" href="/add-remove-wishlist/{{course._id}}"
+                                                        style="color: red;">
+                                                        <span>
+                                                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                                        </span>
+                                                    </a>
+                                                </h2>
+                                                {{/if}}
+                                                {{else}}
+                                                <h2 style="text-align: right;">
+                                                    <a class="button" href="/login" style="color: red;">
+                                                        <span>
+                                                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                                        </span>
+                                                    </a>
+                                                </h2>
+                                                {{/if}}
+                                                <div id="rateYo" data-rateyo-rating="{{point}}" style="float:right"
+                                                    data-rateyo-star-width="20px" data-rateyo-normal-fill="#e9e9e9"
+                                                    data-rateyo-read-only="true">
+                                                </div>
+                                                <h4>Thông tin khoá học</h4>
+                                                <script>
+                                                    $(function () {
+
+                                                        $("#rateYo").rateYo()
+
+                                                    });
+                                                </script>
+                                                <ul>
+                                                    <li> <span>Mô tả ngắn gọn</span> <span>{{course.description}}</span>
+                                                    </li>
+                                                    <li> <span>Học phí</span> <span>{{course.price}}</span></li>
+                                                    <li> <span>Học viên đăng ký </span> <span>
+                                                            {{course.subscribers.length}}</span></li>
+                                                    <li> <span>Học viên đánh giá</span> <span>{{num}}</span></li>
+                                                </ul>
+
+
+                                                <h4>Mô tả chi tiết</h4>
+                                                <p>{{course.detail}}</p>
+
+
+                                                <h4>Thông tin giáo viên</h4>
+                                                <ul>
+                                                    <li> <span>Họ và tên</span> <span>{{course.name_owner}}</span>
+                                                    </li>
+                                                    <li> <span>Email</span> <span>{{course.email_owner}}</span></li>
+                                                </ul>
+                                                <h4>Đề cương môn học</h4>
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th> Tiêu đề </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {{#if (eq check 1)}}
+                                                            {{#each course.videos}}
+                                                            <tr
+                                                                onclick="window.location.href='/course-video?idcourse='+'{{../course._id}}'+'&idvideo='+'{{_id}}'">
+                                                                <td> {{lookup ../num_order @index}}. {{title}} </td>
+                                                            </tr>
+                                                            {{/each}}
+                                                            {{else}}
+                                                            {{#each course.videos}}
+                                                            {{#if (eq isPreviewed true)}}
+                                                            <tr
+                                                                onclick="window.location.href='/course-video?idcourse='+'{{../course._id}}'+'&idvideo='+'{{_id}}'">
+                                                                <td> {{lookup ../num_order @index}}. {{title}} </td>
+                                                            </tr>
+                                                            {{else}}
+                                                            <tr>
+                                                                <td> {{lookup ../num_order @index}}. {{title}} </td>
+                                                            </tr>
+                                                            {{/if}}
+                                                            {{/each}}
+                                                            {{/if}}
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end course content container -->
+
+                            <!-- start blog comment -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mu-comments-area">
+                                        <h3>{{num}} Đánh giá</h3>
+                                        <div class="comments">
+                                            <ul class="commentlist">
+                                                {{#each course.subscribers}}
+                                                {{#if (eq point 0)}}
+                                                {{else}}
+                                                <li>
+                                                    <div class="media">
+                                                        <div class="media-body">
+                                                            <h4 class="author-name">{{name_sub}}</h4>
+                                                            <script>
+                                                                $(function () {
+
+                                                                    $("#rateComment{{_id}}").rateYo()
+
+                                                                });
+                                                            </script>
+                                                            <div id="rateComment{{_id}}" data-rateyo-rating="{{point}}"
+                                                                style="margin-top: 10px; margin-bottom:10px"
+                                                                data-rateyo-star-width="20px"
+                                                                data-rateyo-normal-fill="#e9e9e9"
+                                                                data-rateyo-read-only="true"
+                                                                data-rateyo-full-star="true">
+                                                            </div>
+                                                            <p>{{comment}}</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                {{/if}}
+                                                {{/each}}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end blog comment -->
+                            <!-- start respond form -->
+                            {{#if session.userSession}}
+                            {{#if (eq check_rating 1)}}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="respond">
+                                        <h3 class="reply-title">Viết đánh giá</h3>
+                                        <form id="commentform" action="/rating/{{course._id}}" method="POST">
+                                            <script>
+                                                $(function () {
+
+                                                    $(".rateyo").rateYo().on("rateyo.change", function (err, data) {
+                                                        var rating = data.rating;
+                                                        $(this).parent().find('input[name=rating]').val(rating);
+                                                    })
+
+                                                });
+                                            </script>
+                                            <div class="rateyo" id="rating" data-rateyo-rating="5"
+                                                data-rateyo-full-star="true" data-rateyo-star-width="20px"
+                                                data-rateyo-normal-fill="#e9e9e9" style="margin-bottom: 10px;"></div>
+                                            <input type="hidden" name="rating">
+                                            <p class="comment-form-comment" style="margin-left: 5px;">
+                                                <label for="comment">Bình luận</label>
+                                                <textarea required="required" aria-required="true" rows="8" cols="45"
+                                                    name="comment"></textarea>
+                                            </p>
+                                            <p class="form-submit" style="margin-left: 5px;">
+                                                <input type="submit" value="Gửi đánh giá" class="mu-post-btn"
+                                                    name="submit">
+                                            </p>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/if}}
+                            {{/if}}
+                            <!-- end respond form -->
+                        </div>
+                        <div class="col-md-3">
+                            <!-- start sidebar -->
+                            <aside class="mu-sidebar">
+                                <!-- start single sidebar -->
+                                {{#if (eq check 0)}}
+                                <div class="mu-single-sidebar" style="text-align: center;">
+                                    <h4 style="color: #01bafd;">Học 365 ngày chỉ với</h4>
+                                    <h3 style="color: #ff7e00;">{{course.price}}</h3>
+                                    <button class="btn btn-primary"
+                                        style="background-color: #ff7e00; border-color:#ff7e00"><a
+                                            href="/enroll/{{course._id}}">Đăng ký ngay</a></button>
+                                </div>
+                                {{/if}}
+                                <!-- end single sidebar -->
+                                <!-- start single sidebar -->
+                                <div class="mu-single-sidebar">
+                                    <h3>Khoá học liên quan</h3>
+                                    <div class="mu-sidebar-popular-courses">
+                                        {{#each course_popular}}
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <a href="#">
+                                                    <img class="media-object" src="{{image}}" alt="img">
+                                                </a>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">{{name}}</a></h4>
+                                                <span class="popular-course-price">{{price}}</span>
+                                            </div>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                                <!-- end single sidebar -->
+                            </aside>
+                            <!-- / end sidebar -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

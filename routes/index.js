@@ -48,8 +48,6 @@ router.post('/rating/:id', userController.rating);
 /* teacher */
 router.get('/manage-courses', teacherController.manage_courses);
 
-router.get('/lock-course', teacherController.lock_course);
-
-router.get('/unlock-course', teacherController.unlock_course);
+router.get('/edit-course', teacherController.edit_course);
 
 module.exports = router;
