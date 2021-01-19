@@ -27,10 +27,11 @@
                                 <div class="row">
                                     {{#each list_courses}}
                                     <div class="col-md-6 col-sm-6">
-
                                         <div class="mu-latest-course-single">
                                             <figure class="mu-latest-course-img">
-                                                <a href="course-detail/{{_id}}"><img src="{{image}}" alt="img"></a>
+                                                <a style="height:229px; width:406px" href="course-detail/{{_id}}">
+                                                    <img style="height:229px; width:406px" src="{{image}}" alt="img">
+                                                </a>
                                                 <figcaption class="mu-latest-course-imgcaption">
                                                     {{categoryChildName}}
                                                 </figcaption>
@@ -42,29 +43,14 @@
                                                 <div class="mu-latest-course-single-contbottom">
                                                     <script>
                                                         $(function () {
-<<<<<<< HEAD
-
                                                             $("#rateYo{{_id}}").rateYo()
-
-=======
-                                                            $("#rateYo{{_id}}").rateYo()
->>>>>>> 24ca8a3122c85a2cfe05450e8bcc7188db03e909
                                                         });
                                                     </script>
                                                     <span class="mu-course-price" href="#">{{price}}</span>
                                                     <div id="rateYo{{_id}}" data-rateyo-rating="{{point}}"
                                                         data-rateyo-star-width="20px" data-rateyo-normal-fill="#e9e9e9"
-<<<<<<< HEAD
-                                                        data-rateyo-read-only="true" style="float: left;">
-                                                    </div>
-                                                    {{#if (eq num 0)}}
-                                                    {{else}}
-                                                    <span>({{num}})</span>
-                                                    {{/if}}
-=======
                                                         data-rateyo-read-only="true">
                                                     </div>
->>>>>>> 24ca8a3122c85a2cfe05450e8bcc7188db03e909
                                                 </div>
                                             </div>
                                         </div>
@@ -86,7 +72,8 @@
                                         </li>
                                         {{#each page_number}}
                                         <li><a style="{{isCurrentPage ../current_page this}}"
-                                                href="list-courses?page={{this}}&category={{../category_name}}">{{this}}</a></li>
+                                                href="list-courses?page={{this}}&category={{../category_name}}">{{this}}</a>
+                                        </li>
                                         {{/each}}
                                         <li style="{{isDisplayedNext current_page page_number.length}}">
                                             <a href="list-courses?page={{predictPage current_page 1}}&category={{category_name}}"
@@ -112,7 +99,7 @@
                                             </a>
                                         </li>
                                         {{/if}}
-                                        
+
                                     </ul>
                                 </nav>
                             </div>

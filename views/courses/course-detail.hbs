@@ -28,9 +28,17 @@
                                     <div class="col-md-12">
                                         <div class="mu-latest-course-single">
                                             <figure class="mu-latest-course-img">
-                                                <a href="#"><img src="{{course.image}}" alt="img"></a>
+                                                <a href="#">
+                                                    <img src="{{course.image}}" alt="img"></a>
                                                 <figcaption class="mu-latest-course-imgcaption">
-                                                    <a href="#">{{course.categoryChildName}}</a>
+                                                    <a style="float:left; margin-top:10px"
+                                                        href="#">{{course.categoryChildName}}</a>
+                                                    {{#if (isTeacher role)}}
+                                                    <button style="float:right;" class="btn btn-primary">
+                                                        <a style="color:white" href="/edit-course/{{course._id}}">Chỉnh
+                                                            sửa khóa
+                                                            học</a></button>
+                                                    {{/if}}
                                                 </figcaption>
 
                                             </figure>
@@ -160,7 +168,8 @@
 
                                                                 });
                                                             </script>
-                                                            <div id="rateComment{{_id}}" data-rateyo-rating="{{point}}" style="margin-top: 10px; margin-bottom:10px"
+                                                            <div id="rateComment{{_id}}" data-rateyo-rating="{{point}}"
+                                                                style="margin-top: 10px; margin-bottom:10px"
                                                                 data-rateyo-star-width="20px"
                                                                 data-rateyo-normal-fill="#e9e9e9"
                                                                 data-rateyo-read-only="true"
@@ -237,9 +246,10 @@
                                     <div class="mu-sidebar-popular-courses">
                                         {{#each course_popular}}
                                         <div class="media">
-                                            <div class="media-left">
+                                            <div style="height: 50px;" class="media-left">
                                                 <a href="#">
-                                                    <img class="media-object" src="{{image}}" alt="img">
+                                                    <img style="height: 50px;" class="media-object" src="{{image}}"
+                                                        alt="img">
                                                 </a>
                                             </div>
                                             <div class="media-body">

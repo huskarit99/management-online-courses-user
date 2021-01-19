@@ -4,7 +4,12 @@ var homeController = require('../controllers/homeController');
 var courseController = require('../controllers/courseController');
 var userController = require('../controllers/userController');
 var teacherController = require('../controllers/teacherController');
+<<<<<<< HEAD
 const user = require('../models/user');
+=======
+const multer = require('multer');
+const upload = multer({ dest: __dirname + '/uploads/images' });
+>>>>>>> NTHoc
 
 /* guest. */
 router.get('/', homeController.index);
@@ -49,8 +54,14 @@ router.post('/rating/:id', userController.rating);
 /* teacher */
 router.get('/manage-courses', teacherController.manage_courses);
 
+<<<<<<< HEAD
 router.get('/lock-course', teacherController.lock_course);
 
 router.get('/unlock-course', teacherController.unlock_course);
+=======
+router.get('/edit-course/:id', teacherController.edit_course);
+
+router.post('/upload', upload.single('photo'), teacherController.edit_course);
+>>>>>>> NTHoc
 
 module.exports = router;

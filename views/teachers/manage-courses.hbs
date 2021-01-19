@@ -28,6 +28,8 @@
                                         <div class="mu-latest-course-single">
                                             <figure class="mu-latest-course-img">
                                                 <a href="course-detail/{{_id}}"><img src="{{image}}" alt="img"></a>
+                                                <a style="height:229px;" href="course-detail/{{_id}}">
+                                                    <img style="height:229px;" src="{{image}}" alt="img"></a>
                                                 <figcaption class="mu-latest-course-imgcaption">
                                                     {{categoryChildName}}
                                                 </figcaption>
@@ -37,7 +39,20 @@
                                                 <p>Giảng viên: {{nameOwner}}</p>
                                                 <p>{{description}}</p>
                                                 <div class="mu-latest-course-single-contbottom">
+                                                    <script>
+                                                        $(function () {
+                                                            $("#rateYo{{_id}}").rateYo()
+                                                        });
+                                                    </script>
                                                     <span class="mu-course-price" href="#">{{price}}</span>
+                                                    <div id="rateYo{{_id}}" data-rateyo-rating="{{point}}"
+                                                        data-rateyo-star-width="20px" data-rateyo-normal-fill="#e9e9e9"
+                                                        data-rateyo-read-only="true" style="float: left;">
+                                                    </div>
+                                                    {{#if (eq num 0)}}
+                                                    {{else}}
+                                                    <span>({{num}})</span>
+                                                    {{/if}}
                                                 </div>
                                             </div>
                                         </div>
@@ -49,17 +64,17 @@
                                         <ul class="pagination">
                                             <li style="{{isDisplayedPrevious currentPage 1}}" class="page-item"><a
                                                     class="page-link"
-                                                    href="manage-courses?{{predictPage currentPage -1 filterByCategory filterByUser}}">Previous</a>
+                                                    href="manage-courses?{{predictPage currentPage -1}}">Previous</a>
                                             </li>
                                             {{#each  page_number}}
                                             <li class="page-item">
                                                 <a class="page-link" style="{{isCurrentPage ../currentPage this}}"
-                                                    href="manage-courses?{{choosePage this ../filterByCategory ../filterByUser}}">{{this}}</a>
+                                                    href="manage-courses?page={{this}}">{{this}}</a>
                                             </li>
                                             {{/each}}
                                             <li style="{{isDisplayedNext currentPage page_number.length}}"
                                                 class="page-item"><a class="page-link"
-                                                    href="manage-courses?{{predictPage currentPage 1 filterByCategory filterByUser}}">Next</a>
+                                                    href="manage-courses?{{predictPage currentPage 1}}">Next</a>
                                             </li>
                                         </ul>
                                     </nav>

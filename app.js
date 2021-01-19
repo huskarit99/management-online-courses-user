@@ -65,6 +65,12 @@ app.engine('hbs', hbs({
             return args.every(function (expression) {
                 return args[0] === expression;
             });
+        },
+        isTeacher: (role) => {
+            if (role == 1) {
+                return true;
+            }
+            return false;
         }
     }
 }))
