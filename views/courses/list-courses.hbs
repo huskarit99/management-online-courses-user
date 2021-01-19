@@ -42,9 +42,7 @@
                                                 <div class="mu-latest-course-single-contbottom">
                                                     <script>
                                                         $(function () {
-
                                                             $("#rateYo{{_id}}").rateYo()
-
                                                         });
                                                     </script>
                                                     <span class="mu-course-price" href="#">{{price}}</span>
@@ -77,7 +75,8 @@
                                         </li>
                                         {{#each page_number}}
                                         <li><a style="{{isCurrentPage ../current_page this}}"
-                                                href="list-courses?page={{this}}&category={{../category_name}}">{{this}}</a></li>
+                                                href="list-courses?page={{this}}&category={{../category_name}}">{{this}}</a>
+                                        </li>
                                         {{/each}}
                                         <li style="{{isDisplayedNext current_page page_number.length}}">
                                             <a href="list-courses?page={{predictPage current_page 1}}&category={{category_name}}"
@@ -103,7 +102,7 @@
                                             </a>
                                         </li>
                                         {{/if}}
-                                        
+
                                     </ul>
                                 </nav>
                             </div>

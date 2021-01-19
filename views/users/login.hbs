@@ -1,165 +1,66 @@
-<!-- Start header  -->
-<header id="mu-header">
+<!-- Page breadcrumb -->
+<section id="mu-page-breadcrumb">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="mu-header-area">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <div class="mu-header-top-left">
-                                <div class="mu-top-email">
-                                    <i class="fa fa-envelope"></i>
-                                    <span>info@markups.io</span>
-                                </div>
-                                <div class="mu-top-phone">
-                                    <i class="fa fa-phone"></i>
-                                    <span>(568) 986 652</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <div class="mu-header-top-right">
-                                <nav>
-                                    <ul class="mu-top-social-nav">
-                                        <li><a href="#"><span class="fa fa-facebook"></span></a></li>
-                                        <li><a href="#"><span class="fa fa-twitter"></span></a></li>
-                                        <li><a href="#"><span class="fa fa-google-plus"></span></a></li>
-                                        <li><a href="#"><span class="fa fa-linkedin"></span></a></li>
-                                        <li><a href="#"><span class="fa fa-youtube"></span></a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
+            <div class="col-md-12">
+                <div class="mu-page-breadcrumb-area">
+                    <h2>Đăng nhập</h2>
+                    <ol class="breadcrumb">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li class="active">Đăng nhập</li>
+                    </ol>
                 </div>
             </div>
         </div>
     </div>
-</header>
-<!-- End header  -->
-<!-- Start menu -->
-<section id="mu-menu">
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <!-- FOR MOBILE VIEW COLLAPSED BUTTON -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <!-- LOGO -->
-                <!-- TEXT BASED LOGO -->
-                <a class="navbar-brand" href="/"><i class="fa fa-university"></i><span>Varsity</span></a>
-                <!-- IMG BASED LOGO  -->
-                <!-- <a class="navbar-brand" href="index.html"><img src="assets/img/logo.png" alt="logo"></a> -->
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul id="top-menu" class="nav navbar-nav navbar-right main-nav">
-                    <li><a href="/">Trang chủ</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Khoá học <span
-                                class="fa fa-angle-down"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <style>
-                                .sub-menu-2 {
-                                    display: none;
-                                }
-
-                                .hover-me:hover .sub-menu-2 {
-                                    position: absolute;
-                                    display: block;
-                                    margin-top: -44px;
-                                }
-                            </style>
-                            <li><a href="list-courses">Tất cả</a></li>
-                            {{#each session.category}}
-                            <li class="hover-me"><a href="#">{{name}}</a>
-                                <div class="sub-menu-2" role="menu">
-                                    {{#if categories.length}}
-                                    <ul class="dropdown-menu">
-                                        {{#each categories}}
-                                        <li><a href="list-courses?category={{name}}">{{name}}</a></li>
-                                        {{/each}}
-                                    </ul>
-                                    {{else}}
-                                    {{/if}}
-                                </div>
-                            </li>
-                            {{/each}}
-                        </ul>
-                    </li>
-                    {{#if session.userSession}}
-                    {{#if (eq session.userSession.role 1)}}
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tài khoản <span
-                                class="fa fa-angle-down"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="/profile">Thông tin cá nhân</a></li>
-                            <li><a href="blog-single.html">Quản lý khoá học</a></li>
-                            <li><a href='/logout'>Đăng xuất</a></li>
-                        </ul>
-                    </li>
-                    {{else}}
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tài khoản <span
-                                class="fa fa-angle-down"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="/profile">Thông tin cá nhân</a></li>
-                            <li><a href="/wishlist">Danh sách yêu thích</a></li>
-                            <li><a href="/enrolled-courses">Khoá học của tôi</a></li>
-                            <li><a href='/logout'>Đăng xuất</a></li>
-                        </ul>
-                    </li>
-                    {{/if}}
-                    {{else}}
-                    <li><a href="/login">Đăng nhập</a></li>
-                    {{/if}}
-                    <li><a data-toggle="modal" data-target="#exampleModal"><i class="fa fa-search"></i></a></li>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Tìm kiếm</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="acount-infor" action="/search-course" class="acount-infor" method="get">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="search" placeholder="Tìm kiếm"
-                                                style="padding: 10px;" required>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary"
-                                                style="background-color: #01bafd">Tìm kiếm</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                </ul>
-            </div>
-            <!--/.nav-collapse -->
-        </div>
-    </nav>
 </section>
-<!-- End menu -->
-<!-- Start search box -->
-<div id="mu-search">
-    <div class="mu-search-area">
-        <button class="mu-search-close"><span class="fa fa-close"></span></button>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <form class="mu-search-form">
-                        <input type="search" placeholder="Type Your Keyword(s) & Hit Enter">
-                    </form>
-                </div>
+<!-- End breadcrumb -->
+<style>
+    .login-form {
+        width: 340px;
+        margin: 50px auto;
+        font-size: 15px;
+    }
+
+    .login-form form {
+        margin-bottom: 15px;
+        background: #f7f7f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+
+    .login-form h2 {
+        margin: 0 0 15px;
+    }
+
+    .form-control,
+    .btn {
+        min-height: 38px;
+        border-radius: 2px;
+    }
+
+    .btn {
+        font-size: 15px;
+        font-weight: bold;
+    }
+</style>
+<section id="mu-error">
+    <div class="login-form">
+        <form action="/login" method="post">
+            <h2 class="text-center">Đăng nhập</h2>
+            <div class="form-group">
+                <input type="text" class="form-control" name="username" value="minhq" placeholder="Username"
+                    required="required">
             </div>
-        </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" value="12345678" minlength="8"
+                    placeholder="Password" required="required">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block"
+                    style="background-color: #01bafd; border-color: #01bafd">Đăng nhập</button>
+            </div>
+        </form>
+        <p class="text-center"><a href="register">Đăng ký tài khoản</a></p>
     </div>
-</div>
-<!-- End search box -->
+</section>
