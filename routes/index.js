@@ -63,8 +63,8 @@ router.post('/upload', upload.single('photo'), (req, res) => {
         fs.rename(tempPath, targetPath, err => {
             if (err) return handleError(err, res);
             const contents = fs.readFileSync(targetPath, { encoding: 'base64' });
-            console.log(contents);
-            res.send(contents);
+            // console.log(contents);
+            // res.send(contents);
         });
     }
 });
