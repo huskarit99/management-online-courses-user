@@ -1,6 +1,10 @@
 const Course = require('../models/course');
 const User = require('../models/user');
 const Category = require('../models/category');
+const path = require("path");
+var fs = require('fs');
+
+var tmpId;
 
 exports.manage_courses = async (req, res, next) => {
     if (req.session.userSession) {
@@ -70,10 +74,33 @@ exports.manage_courses = async (req, res, next) => {
     }
 }
 
-exports.edit_course = (req, res, next) => {
-    let id = req.params.id;
+exports.edit_course = async (req, res, next) => {
+    var newImage = "";
+    if (req.file && req.file.path) {
+        const tempPath = req.file.path;
+        const targetPath = path.join(__dirname, "./uploads/image.jpg");
 
-    Course.findOne({ _id: id }).lean().exec(async function (err, course_detail) {
+        if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
+            fs.rename(tempPath, targetPath, err => {
+                if (err) return handleError(err, res);
+                const contents = fs.readFileSync(targetPath, { encoding: 'base64' });
+                // console.log(contents);
+                // res.send(contents);
+                newImage = "data:image/jpg;base64," + contents;
+            });
+        }
+    }
+    let id = req.params.id || tmpId;
+    tmpId = id;
+    var categories = [];
+    await Category.find({ status: 1 }).lean().exec((err, listCategory) => {
+        if (err) return next(err);
+        if (listCategory) {
+            categories = listCategory;
+        }
+    });
+
+    await Course.findOne({ _id: id }).lean().exec(async function (err, course_detail) {
         let data = course_detail;
         await User.findOne({ _id: course_detail.ownerId }, (err, user) => {
             if (err) return next(err);
@@ -156,6 +183,8 @@ exports.edit_course = (req, res, next) => {
                 course_view.views = course_view.views + 1;
                 course_view.save(function (err, result) { });
                 res.render('teachers/edit-course', {
+                    newImage: newImage,
+                    categories: categories,
                     num: num,
                     point: point,
                     num_order: num_order,

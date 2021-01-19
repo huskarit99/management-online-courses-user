@@ -4,10 +4,8 @@ var homeController = require('../controllers/homeController');
 var courseController = require('../controllers/courseController');
 var userController = require('../controllers/userController');
 var teacherController = require('../controllers/teacherController');
-const path = require("path");
 const multer = require('multer');
 const upload = multer({ dest: __dirname + '/uploads/images' });
-var fs = require('fs');
 
 /* guest. */
 router.get('/', homeController.index);
@@ -54,19 +52,6 @@ router.get('/manage-courses', teacherController.manage_courses);
 
 router.get('/edit-course/:id', teacherController.edit_course);
 
-router.post('/upload', upload.single('photo'), (req, res) => {
-    const tempPath = req.file.path;
-    console.log(req.file);
-    const targetPath = path.join(__dirname, "./uploads/image.jpg");
-
-    if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
-        fs.rename(tempPath, targetPath, err => {
-            if (err) return handleError(err, res);
-            const contents = fs.readFileSync(targetPath, { encoding: 'base64' });
-            // console.log(contents);
-            // res.send(contents);
-        });
-    }
-});
+router.post('/upload', upload.single('photo'), teacherController.edit_course);
 
 module.exports = router;

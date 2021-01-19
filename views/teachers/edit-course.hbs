@@ -22,25 +22,54 @@
             <div class="col-md-12">
                 <div class="mu-course-content-area">
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                             <!-- start course content container -->
                             <div class="mu-course-container mu-course-details">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="mu-latest-course-single">
                                             <figure class="mu-latest-course-img">
-                                                <a href="/upload"><img src="{{course.image}}" alt="img"></a>
-                                                <figcaption class="mu-latest-course-imgcaption">
-                                                    <a href="#">{{course.categoryChildName}}</a>
-                                                </figcaption>
-
+                                                <a href="#">
+                                                    {{#unless newImage}}
+                                                    <img src="{{course.image}}" alt="img">
+                                                    {{else}}
+                                                    <img src="{{newImage}}" alt="img">
+                                                    {{/unless}}
+                                                </a>
+                                                <br />
+                                                <div style="margin-left: 20px;">
+                                                    <form action="/upload" method="post" enctype="multipart/form-data">
+                                                        <input class="form-control-file" type="file" accept="image/*"
+                                                            name="photo">
+                                                        <br />
+                                                        <input class="btn mt-3" type="submit" value="Submit">
+                                                    </form>
+                                                </div>
                                             </figure>
-                                            <div class="mu-latest-course-single-content">
 
-                                                <h2 style="float: left;">{{course.name}}</h2>
+                                            <div class="mu-latest-course-single-content">
+                                                <p style="float: left;">
+                                                    Categories Root:
+                                                </p>
+                                                <select style="margin-left: 50px;" class="selectpicker" id="sp1">
+                                                    {{#each categories}}
+                                                    <option value={{_id}}>{{name}}</option>
+                                                    {{/each}}
+                                                </select>
+                                                <br /> <br />
+                                                <p style="float: left;">
+                                                    Sub-categories:
+                                                </p>
+                                                <select style="margin-left: 58px;" class="selectpicker" id="sp2">
+                                                    {{#each categories}}
+                                                    {{#each categories}}
+                                                    <option value={{name}}>{{name}}</option>
+                                                    {{/each}}
+                                                    {{/each}}
+                                                </select>
                                                 {{#if session.userSession}}
                                                 {{#if (eq check_heart 1)}}
-                                                <h2 style="text-align: right;">
+                                                <h2 style=" text-align: right;">
                                                     <a class="button" href="/add-remove-wishlist/{{course._id}}"
                                                         style="color: red;">
                                                         <span>
@@ -80,39 +109,53 @@
                                                     });
                                                 </script>
                                                 <ul>
-                                                    <li> <span>Mô tả ngắn gọn</span> <span>{{course.description}}</span>
+                                                    <li> <span>Mô tả ngắn gọn</span>
+                                                        <input value="{{course.description}}" />
                                                     </li>
-                                                    <li> <span>Học phí</span> <span>{{course.price}}</span></li>
+                                                    <li> <span>Học phí</span>
+                                                        <input value="{{course.price}}" /></li>
                                                     <li> <span>Học viên đăng ký </span> <span>
                                                             {{course.subscribers.length}}</span></li>
-                                                    <li> <span>Học viên đánh giá</span> <span>{{num}}</span></li>
+                                                    <li> <span>Học viên đánh giá</span> <span>{{num}}</span>
+                                                    </li>
                                                 </ul>
 
 
                                                 <h4>Mô tả chi tiết</h4>
-                                                <p>{{course.detail}}</p>
+                                                <textarea id="w3review" name="w3review" rows="4" cols="50">
+{{course.detail}}
+                                                </textarea>
 
 
                                                 <h4>Thông tin giáo viên</h4>
                                                 <ul>
-                                                    <li> <span>Họ và tên</span> <span>{{course.name_owner}}</span>
+                                                    <li> <span>Họ và tên</span>
+                                                        <span>{{course.name_owner}}</span>
                                                     </li>
-                                                    <li> <span>Email</span> <span>{{course.email_owner}}</span></li>
+                                                    <li> <span>Email</span> <span>{{course.email_owner}}</span>
+                                                    </li>
                                                 </ul>
                                                 <h4>Đề cương môn học</h4>
                                                 <div class="table-responsive">
                                                     <table class="table">
+
                                                         <thead>
                                                             <tr>
                                                                 <th> Tiêu đề </th>
+                                                                <th><a style="float: right;">Thêm tiêu đề <i
+                                                                            class="fa fa-plus"
+                                                                            aria-hidden="true"></i></a>
+                                                                </th>
                                                             </tr>
+
                                                         </thead>
                                                         <tbody>
                                                             {{#if (eq check 1)}}
                                                             {{#each course.videos}}
                                                             <tr
                                                                 onclick="window.location.href='/course-video?idcourse='+'{{../course._id}}'+'&idvideo='+'{{_id}}'">
-                                                                <td> {{lookup ../num_order @index}}. {{title}} </td>
+                                                                <td> {{lookup ../num_order @index}}. {{title}}
+                                                                </td>
                                                             </tr>
                                                             {{/each}}
                                                             {{else}}
@@ -120,11 +163,13 @@
                                                             {{#if (eq isPreviewed true)}}
                                                             <tr
                                                                 onclick="window.location.href='/course-video?idcourse='+'{{../course._id}}'+'&idvideo='+'{{_id}}'">
-                                                                <td> {{lookup ../num_order @index}}. {{title}} </td>
+                                                                <td> {{lookup ../num_order @index}}. {{title}}
+                                                                </td>
                                                             </tr>
                                                             {{else}}
                                                             <tr>
-                                                                <td> {{lookup ../num_order @index}}. {{title}} </td>
+                                                                <td> {{lookup ../num_order @index}}. {{title}}
+                                                                </td>
                                                             </tr>
                                                             {{/if}}
                                                             {{/each}}
@@ -139,126 +184,26 @@
                                 </div>
                             </div>
                             <!-- end course content container -->
-
-                            <!-- start blog comment -->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mu-comments-area">
-                                        <h3>{{num}} Đánh giá</h3>
-                                        <div class="comments">
-                                            <ul class="commentlist">
-                                                {{#each course.subscribers}}
-                                                {{#if (eq point 0)}}
-                                                {{else}}
-                                                <li>
-                                                    <div class="media">
-                                                        <div class="media-body">
-                                                            <h4 class="author-name">{{name_sub}}</h4>
-                                                            <script>
-                                                                $(function () {
-
-                                                                    $("#rateComment{{_id}}").rateYo()
-
-                                                                });
-                                                            </script>
-                                                            <div id="rateComment{{_id}}" data-rateyo-rating="{{point}}"
-                                                                style="margin-top: 10px; margin-bottom:10px"
-                                                                data-rateyo-star-width="20px"
-                                                                data-rateyo-normal-fill="#e9e9e9"
-                                                                data-rateyo-read-only="true"
-                                                                data-rateyo-full-star="true">
-                                                            </div>
-                                                            <p>{{comment}}</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                {{/if}}
-                                                {{/each}}
-                                            </ul>
-                                        </div>
+                            <div class="col-md-3">
+                                <!-- start sidebar -->
+                                <aside class="mu-sidebar">
+                                    <!-- start single sidebar -->
+                                    {{#if (eq check 0)}}
+                                    <div class="mu-single-sidebar" style="text-align: center;">
+                                        <h4 style="color: #01bafd;">Học 365 ngày chỉ với</h4>
+                                        <h3 style="color: #ff7e00;">{{course.price}}</h3>
+                                        <button class="btn btn-primary"
+                                            style="background-color: #ff7e00; border-color:#ff7e00"><a
+                                                href="/enroll/{{course._id}}">Đăng ký ngay</a></button>
                                     </div>
-                                </div>
+                                    {{/if}}
+                                    <!-- end single sidebar -->
+                                </aside>
+                                <!-- / end sidebar -->
                             </div>
-                            <!-- end blog comment -->
-                            <!-- start respond form -->
-                            {{#if session.userSession}}
-                            {{#if (eq check_rating 1)}}
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div id="respond">
-                                        <h3 class="reply-title">Viết đánh giá</h3>
-                                        <form id="commentform" action="/rating/{{course._id}}" method="POST">
-                                            <script>
-                                                $(function () {
-
-                                                    $(".rateyo").rateYo().on("rateyo.change", function (err, data) {
-                                                        var rating = data.rating;
-                                                        $(this).parent().find('input[name=rating]').val(rating);
-                                                    })
-
-                                                });
-                                            </script>
-                                            <div class="rateyo" id="rating" data-rateyo-rating="5"
-                                                data-rateyo-full-star="true" data-rateyo-star-width="20px"
-                                                data-rateyo-normal-fill="#e9e9e9" style="margin-bottom: 10px;"></div>
-                                            <input type="hidden" name="rating">
-                                            <p class="comment-form-comment" style="margin-left: 5px;">
-                                                <label for="comment">Bình luận</label>
-                                                <textarea required="required" aria-required="true" rows="8" cols="45"
-                                                    name="comment"></textarea>
-                                            </p>
-                                            <p class="form-submit" style="margin-left: 5px;">
-                                                <input type="submit" value="Gửi đánh giá" class="mu-post-btn"
-                                                    name="submit">
-                                            </p>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            {{/if}}
-                            {{/if}}
-                            <!-- end respond form -->
-                        </div>
-                        <div class="col-md-3">
-                            <!-- start sidebar -->
-                            <aside class="mu-sidebar">
-                                <!-- start single sidebar -->
-                                {{#if (eq check 0)}}
-                                <div class="mu-single-sidebar" style="text-align: center;">
-                                    <h4 style="color: #01bafd;">Học 365 ngày chỉ với</h4>
-                                    <h3 style="color: #ff7e00;">{{course.price}}</h3>
-                                    <button class="btn btn-primary"
-                                        style="background-color: #ff7e00; border-color:#ff7e00"><a
-                                            href="/enroll/{{course._id}}">Đăng ký ngay</a></button>
-                                </div>
-                                {{/if}}
-                                <!-- end single sidebar -->
-                                <!-- start single sidebar -->
-                                <div class="mu-single-sidebar">
-                                    <h3>Khoá học liên quan</h3>
-                                    <div class="mu-sidebar-popular-courses">
-                                        {{#each course_popular}}
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <a href="#">
-                                                    <img class="media-object" src="{{image}}" alt="img">
-                                                </a>
-                                            </div>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="#">{{name}}</a></h4>
-                                                <span class="popular-course-price">{{price}}</span>
-                                            </div>
-                                        </div>
-                                        {{/each}}
-                                    </div>
-                                </div>
-                                <!-- end single sidebar -->
-                            </aside>
-                            <!-- / end sidebar -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </section>
