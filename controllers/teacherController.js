@@ -7,6 +7,7 @@ exports.manage_courses = async (req, res, next) => {
         const page = Number(req.query.page) || Number(1);
         var users = [];
         var categories = [];
+        var id = req.session.userSession._id;
         await User.find({ status: 1, role: 1 }).lean().exec((err, listUser) => {
             if (err) return next(err);
             if (listUser)
@@ -18,7 +19,7 @@ exports.manage_courses = async (req, res, next) => {
                 categories = listCategory;
             }
         });
-        await Course.find()
+        await Course.find({ ownerId: id })
             .lean()
             .exec(async (err, listCourses) => {
                 if (err) {
