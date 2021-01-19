@@ -6,7 +6,7 @@ exports.list_courses = (req, res, next) => {
     const category_name = req.query.category || "none";
     const page = Number(req.query.page) || Number(1);
     if (category_name == "none") {
-        Course.find({ status: 1 }).lean().exec(async function(err, course) {
+        Course.find({ status: 1 }).lean().exec(async function (err, course) {
             var list_courses = [],
                 page_number = [],
                 i = 0;
@@ -43,7 +43,7 @@ exports.list_courses = (req, res, next) => {
                 }
                 i++;
             }
-            Category.find({ status: 1 }).lean().exec(function(err, category) {
+            Category.find({ status: 1 }).lean().exec(function (err, category) {
                 if (err) return next(err);
                 for (var i = 0; i < category.length; i++) {
                     if (!category[i].categories) continue;
@@ -65,7 +65,7 @@ exports.list_courses = (req, res, next) => {
             });
         });
     } else {
-        Course.find({ status: 1, categoryChildName: category_name }).lean().exec(async function(err, course) {
+        Course.find({ status: 1, categoryChildName: category_name }).lean().exec(async function (err, course) {
             var list_courses = [],
                 page_number = [],
                 i = 0;
@@ -103,7 +103,7 @@ exports.list_courses = (req, res, next) => {
                 i++;
             }
 
-            Category.find({ status: 1 }).lean().exec(function(err, category) {
+            Category.find({ status: 1 }).lean().exec(function (err, category) {
                 if (err) return next(err);
                 for (var i = 0; i < category.length; i++) {
                     if (!category[i].categories) continue;
@@ -131,7 +131,7 @@ exports.list_courses = (req, res, next) => {
 exports.course_detail = (req, res, next) => {
     let id = req.params.id;
 
-    Course.findOne({ _id: id }).lean().exec(async function(err, course_detail) {
+    Course.findOne({ _id: id }).lean().exec(async function (err, course_detail) {
         let data = course_detail;
         await User.findOne({ _id: course_detail.ownerId }, (err, user) => {
             if (err) return next(err);
@@ -180,7 +180,7 @@ exports.course_detail = (req, res, next) => {
         console.log(check_rating);
         course_detail.price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(course_detail.price);
 
-        Course.find({ categoryChildName: course_detail.categoryChildName }).lean().exec(function(err, course) {
+        Course.find({ categoryChildName: course_detail.categoryChildName }).lean().exec(function (err, course) {
             for (var i = 0; i < course.length - 1; i++) {
                 for (var j = i + 1; j < course.length; j++) {
                     if (course[i].subscribers.length < course[j].subscribers.length) {
@@ -214,9 +214,9 @@ exports.course_detail = (req, res, next) => {
             }
             console.log(check_heart);
 
-            Course.findOne({ _id: id }, function(err, course_view) {
+            Course.findOne({ _id: id }, function (err, course_view) {
                 course_view.views = course_view.views + 1;
-                course_view.save(function(err, result) {});
+                course_view.save(function (err, result) { });
                 res.render('courses/course-detail', {
                     num: num,
                     point: point,
@@ -236,7 +236,7 @@ exports.course_detail = (req, res, next) => {
 exports.course_video = (req, res, next) => {
     let id_course = req.query.idcourse;
     let id_video = req.query.idvideo;
-    Course.findById(id_course).lean().exec(function(err, course) {
+    Course.findById(id_course).lean().exec(function (err, course) {
         if (err) { return next(err) };
         let video;
         let num;
@@ -276,7 +276,7 @@ exports.search_course = (req, res, next) => {
         let sortbyprice = req.query.sortbyprice;
         Course.find({ name: { "$regex": search, "$options": "i" } }).lean().sort([
             ['price', sortbyprice]
-        ]).exec(async function(err, course) {
+        ]).exec(async function (err, course) {
             if (err) return next(err);
             var list_courses = [],
                 page_number = [],
@@ -324,7 +324,7 @@ exports.search_course = (req, res, next) => {
         });
     } else if (req.query.sortbypoint) {
         let sortbypoint = req.query.sortbypoint;
-        Course.find({ name: { "$regex": search, "$options": "i" } }).lean().exec(async function(err, course) {
+        Course.find({ name: { "$regex": search, "$options": "i" } }).lean().exec(async function (err, course) {
             if (err) return next(err);
             var list_courses = [],
                 page_number = [],
@@ -392,7 +392,7 @@ exports.search_course = (req, res, next) => {
             });
         });
     } else {
-        Course.find({ name: { "$regex": search, "$options": "i" } }).lean().exec(async function(err, course) {
+        Course.find({ name: { "$regex": search, "$options": "i" } }).lean().exec(async function (err, course) {
             if (err) return next(err);
             var list_courses = [],
                 page_number = [],
@@ -438,5 +438,4 @@ exports.search_course = (req, res, next) => {
             });
         });
     }
-
 }
