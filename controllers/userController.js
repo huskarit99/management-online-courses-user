@@ -248,30 +248,12 @@ exports.add_remove_wishlist = (req, res, next) => {
 
 exports.wishlist = (req, res, next) => {
     if (req.session.userSession) {
-<<<<<<< HEAD
         User.findOne({ _id: req.session.userSession._id }).lean().exec(async function (err, user) {
-            for (var i = 0; i < user.wishlist.length; i++) {
-                var data = user.wishlist[i];
-                await new Promise((rs1, rj1) => {
-                    Course.findOne({ _id: data.courseId }, async function (err, course) {
-                        if (err) return next(err);
-                        data['image'] = course.image;
-                        data['categoryChildName'] = course.categoryChildName;
-                        data['name'] = course.name;
-                        data['price'] = course.price;
-                        data['price'] = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data['price']);
-                        data['description'] = course.description;
-                        await new Promise((rs2, rj2) => {
-                            User.findOne({ _id: course.ownerId }, (err, user) => {
-                                data['nameOwner'] = user['name'];
-                                rs2("done");
-=======
-        User.findOne({ _id: req.session.userSession._id }).lean().exec(async function(err, user) {
             if (user.wishlist) {
                 for (var i = 0; i < user.wishlist.length; i++) {
                     var data = user.wishlist[i];
                     await new Promise((rs1, rj1) => {
-                        Course.findOne({ _id: data.courseId }, async function(err, course) {
+                        Course.findOne({ _id: data.courseId }, async function (err, course) {
                             if (err) return next(err);
                             data['image'] = course.image;
                             data['categoryChildName'] = course.categoryChildName;
@@ -284,7 +266,6 @@ exports.wishlist = (req, res, next) => {
                                     data['nameOwner'] = user['name'];
                                     rs2("done");
                                 });
->>>>>>> NTHoc
                             });
                             rs1("done");
                         });
