@@ -1,0 +1,86 @@
+<!-- Page breadcrumb -->
+<section id="mu-page-breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mu-page-breadcrumb-area">
+                    <h2>Quản lý khoá học</h2>
+                    <ol class="breadcrumb">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li class="active">Quản lý khoá học</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="mu-course-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mu-course-content-area">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mu-course-container">
+                                <div class="row">
+                                    {{#each listCoursesInOnePage}}
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="mu-latest-course-single">
+                                            <figure class="mu-latest-course-img">
+                                                <a href="course-detail/{{_id}}"><img src="{{image}}" alt="img"></a>
+                                                <figcaption class="mu-latest-course-imgcaption">
+                                                    {{categoryChildName}}
+                                                </figcaption>
+                                            </figure>
+                                            <div class="mu-latest-course-single-content">
+                                                <h4>{{name}}</h4>
+                                                <p>Giảng viên: {{nameOwner}}</p>
+                                                <p>{{description}}</p>
+                                                <div class="mu-latest-course-single-contbottom">
+                                                    <span class="mu-course-price" href="#">{{price}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                                <div class="custom-pagination" style="margin-bottom: 20px;">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li style="{{isDisplayedPrevious currentPage 1}}" class="page-item"><a
+                                                    class="page-link"
+                                                    href="manage-courses?{{predictPage currentPage -1 filterByCategory filterByUser}}">Previous</a>
+                                            </li>
+                                            {{#each  page_number}}
+                                            <li class="page-item">
+                                                <a class="page-link" style="{{isCurrentPage ../currentPage this}}"
+                                                    href="manage-courses?{{choosePage this ../filterByCategory ../filterByUser}}">{{this}}</a>
+                                            </li>
+                                            {{/each}}
+                                            <li style="{{isDisplayedNext currentPage page_number.length}}"
+                                                class="page-item"><a class="page-link"
+                                                    href="manage-courses?{{predictPage currentPage 1 filterByCategory filterByUser}}">Next</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-copyright-area">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="footer-copy-right">
+                                            <p>Copyright © 2018. All rights reserved. Template by <a
+                                                    href="https://colorlib.com/wp/templates/">Colorlib</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
