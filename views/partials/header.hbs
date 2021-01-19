@@ -63,11 +63,31 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Khoá học <span
                                 class="fa fa-angle-down"></span></a>
                         <ul class="dropdown-menu" role="menu">
+                            <style>
+                                .sub-menu-2 {
+                                    display: none;
+                                }
+
+                                .hover-me:hover .sub-menu-2 {
+                                    position: absolute;
+                                    display: block;
+                                    margin-top: -44px;
+                                }
+                            </style>
                             <li><a href="list-courses">Tất cả</a></li>
                             {{#each session.category}}
-                            {{#each categories}}
-                            <li><a href="list-courses?category={{name}}">{{name}}</a></li>
-                            {{/each}}
+                            <li class="hover-me"><a href="#">{{name}}</a>
+                                <div class="sub-menu-2" role="menu">
+                                    {{#if categories.length}}
+                                    <ul class="dropdown-menu">
+                                        {{#each categories}}
+                                        <li><a href="list-courses?category={{name}}">{{name}}</a></li>
+                                        {{/each}}
+                                    </ul>
+                                    {{else}}
+                                    {{/if}}
+                                </div>
+                            </li>
                             {{/each}}
                         </ul>
                     </li>
@@ -97,10 +117,6 @@
                     {{else}}
                     <li><a href="/login">Đăng nhập</a></li>
                     {{/if}}
-
-
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="404.html">404 Page</a></li>
                     <li><a data-toggle="modal" data-target="#exampleModal"><i class="fa fa-search"></i></a></li>
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -113,11 +129,12 @@
                                 <div class="modal-body">
                                     <form id="acount-infor" action="/search-course" class="acount-infor" method="get">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="search"
-                                                placeholder="Tìm kiếm" style="padding: 10px;" required>
+                                            <input type="text" class="form-control" name="search" placeholder="Tìm kiếm"
+                                                style="padding: 10px;" required>
                                         </div>
-                                        <div class="modal-footer" >
-                                            <button type="submit" class="btn btn-primary" style="background-color: #01bafd">Tìm kiếm</button>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary"
+                                                style="background-color: #01bafd">Tìm kiếm</button>
                                         </div>
                                     </form>
                                 </div>
