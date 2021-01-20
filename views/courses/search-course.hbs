@@ -30,7 +30,8 @@
 
                                         <div class="mu-latest-course-single">
                                             <figure class="mu-latest-course-img">
-                                                <a href="course-detail/{{_id}}"><img src="{{image}}" alt="img"></a>
+                                                <a style="height:229px; width:406px" href="course-detail/{{_id}}">
+                                                <img src="{{image}}" alt="img" style="height:229px; width:406px"></a>
                                                 <figcaption class="mu-latest-course-imgcaption">
                                                     {{categoryChildName}}
                                                 </figcaption>
@@ -98,6 +99,23 @@
                                         {{/each}}
                                         <li style="{{isDisplayedNext current_page page_number.length}}">
                                             <a href="list-courses?page={{predictPage current_page 1}}&search={{search}}&sortbypoint={{sortbypoint}}"
+                                                aria-label="Next">
+                                                Next <span class="fa fa-angle-right"></span>
+                                            </a>
+                                        </li>
+                                        {{else}}
+                                        <li style="{{isDisplayedPrevious current_page 1}}">
+                                            <a href="list-courses?page={{predictPage current_page -1}}&search={{search}}"
+                                                aria-label="Previous">
+                                                <span class="fa fa-angle-left"></span> Prev
+                                            </a>
+                                        </li>
+                                        {{#each page_number}}
+                                        <li><a style="{{isCurrentPage ../current_page this}}"
+                                                href="list-courses?page={{this}}&search={{../search}}">{{this}}</a></li>
+                                        {{/each}}
+                                        <li style="{{isDisplayedNext current_page page_number.length}}">
+                                            <a href="list-courses?page={{predictPage current_page 1}}&search={{search}}"
                                                 aria-label="Next">
                                                 Next <span class="fa fa-angle-right"></span>
                                             </a>
